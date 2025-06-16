@@ -86,7 +86,7 @@
         "dependencies": [
           1
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -94,7 +94,7 @@
             "description": "Set up a new Supabase project in the cloud platform",
             "dependencies": [],
             "details": "Create a new Supabase project through the Supabase dashboard. Configure the project settings including region, database password, and pricing plan. Note down the project URL and API keys for future reference.",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 2,
@@ -104,7 +104,7 @@
               1
             ],
             "details": "Create a users table that extends Supabase's auth.users table. Include columns for user profile information such as display_name, avatar_url, and any other user-specific data. Set up appropriate constraints and indexes for optimal performance.",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 3,
@@ -114,7 +114,7 @@
               2
             ],
             "details": "Create a workspaces table with columns for workspace name, description, creation date, and owner_id (foreign key to users table). Set up appropriate constraints and indexes. Implement a many-to-many relationship with users through a junction table for workspace members.",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 4,
@@ -125,7 +125,7 @@
               3
             ],
             "details": "Create a tasks table with columns for title, description, status, priority, due_date, assigned_to (foreign key to users), and workspace_id (foreign key to workspaces). Set up appropriate constraints and indexes for efficient querying.",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 5,
@@ -136,7 +136,7 @@
               4
             ],
             "details": "Create a comments table with columns for content, creation_date, task_id (foreign key to tasks), and user_id (foreign key to users). Set up appropriate constraints and indexes for efficient retrieval of comments for specific tasks.",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 6,
@@ -149,7 +149,7 @@
               5
             ],
             "details": "Configure Row-Level Security (RLS) policies for all tables to restrict data access based on user roles and permissions. Implement policies for read, insert, update, and delete operations. Ensure workspace members can only access data within their workspaces and that sensitive data is properly protected.",
-            "status": "pending"
+            "status": "done"
           }
         ]
       },
@@ -2312,7 +2312,7 @@
     ],
     "metadata": {
       "created": "2025-06-16T08:11:19.709Z",
-      "updated": "2025-06-16T08:45:03.253Z",
+      "updated": "2025-06-16T12:03:39.898Z",
       "description": "Tasks for master context"
     }
   }
