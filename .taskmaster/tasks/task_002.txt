@@ -1,6 +1,6 @@
 # Task ID: 2
 # Title: Setup Database Schema in Supabase
-# Status: pending
+# Status: done
 # Dependencies: 1
 # Priority: high
 # Description: Implement the PostgreSQL database schema in Supabase as defined in the PRD, using Supabase-specific features and best practices.
