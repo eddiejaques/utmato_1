@@ -1,0 +1,29 @@
+Generic single-database configuration.
+
+# Database Migration Workflow (Alembic)
+
+This project uses Alembic for managing PostgreSQL schema migrations.
+
+## How to Use
+
+1. **Set up your environment:**
+   - Ensure your `.env` file contains `SUPABASE_DATABASE_URL` with the correct connection string.
+   - Activate your Python virtual environment: `source backend/venv/bin/activate`
+
+2. **Create a new migration:**
+   - `alembic revision --autogenerate -m "<description>"`
+
+3. **Apply migrations:**
+   - `alembic upgrade head`
+
+4. **Rollback migrations:**
+   - `alembic downgrade -1` (or specify a revision)
+
+5. **Check migration status:**
+   - `alembic current`
+
+## Notes
+- Alembic is configured to use the SUPABASE_DATABASE_URL from your .env file.
+- All migration scripts are stored in `migrations/versions/`.
+- Keep `scripts/schema.sql` in sync with your latest migrations for version control.
+- For local development, you can use the Supabase CLI or a local Postgres instance.
