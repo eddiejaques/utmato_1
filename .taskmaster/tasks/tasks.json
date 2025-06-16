@@ -1,0 +1,2319 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Project Repository and Structure",
+        "description": "Create a monorepo structure with separate directories for frontend (Next.js) and backend (FastAPI) components.",
+        "details": "Initialize a Git repository with the following structure:\n- `/frontend`: Next.js project\n- `/backend`: FastAPI project\n- `/docs`: Documentation\n- `/scripts`: Utility scripts\n\nSet up basic README.md with project overview and setup instructions. Configure .gitignore for both Next.js and Python projects. Initialize package.json and requirements.txt files with core dependencies.",
+        "testStrategy": "Verify repository structure is correctly set up with all necessary configuration files. Ensure both frontend and backend projects can be initialized and run independently.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Initialize Git Repository",
+            "description": "Create a new Git repository with proper structure and initial commit",
+            "dependencies": [],
+            "details": "Create a new Git repository, add .gitignore file for Node.js and Python, set up README.md with project overview, and make the initial commit. Configure branch protection rules if needed.",
+            "status": "done"
+          },
+          {
+            "id": 2,
+            "title": "Set Up Frontend Next.js Project",
+            "description": "Initialize and configure the Next.js frontend application",
+            "dependencies": [
+              1
+            ],
+            "details": "Create a new Next.js project in the 'frontend' directory. Configure TypeScript, ESLint, and Prettier. Set up the basic folder structure (pages, components, styles, utils). Install essential dependencies and create a sample home page to verify setup.",
+            "status": "done"
+          },
+          {
+            "id": 3,
+            "title": "Set Up Backend FastAPI Project",
+            "description": "Initialize and configure the FastAPI backend application",
+            "dependencies": [
+              1
+            ],
+            "details": "Create a new FastAPI project in the 'backend' directory. Set up virtual environment, requirements.txt, and basic project structure (routers, models, services). Implement a health check endpoint and configure CORS to allow frontend connections.",
+            "status": "done"
+          },
+          {
+            "id": 4,
+            "title": "Create Documentation Structure",
+            "description": "Set up documentation files and utility scripts",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Create a 'docs' directory with markdown files for API documentation, development setup guide, and project architecture. Add utility scripts for common development tasks in a 'scripts' directory. Include detailed instructions for local development setup.",
+            "status": "done"
+          },
+          {
+            "id": 5,
+            "title": "Configure Development Environment",
+            "description": "Set up configuration files and development environment",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Create environment configuration files (.env.example) for both frontend and backend. Set up Docker and docker-compose for containerized development. Configure VSCode settings and extensions recommendations. Ensure consistent coding standards across the project.",
+            "status": "done"
+          },
+          {
+            "id": 6,
+            "title": "Implement Dependency Management",
+            "description": "Set up package management and dependency tracking",
+            "dependencies": [
+              2,
+              3,
+              5
+            ],
+            "details": "Configure package.json for frontend dependencies with proper versioning. Set up requirements.txt and potentially poetry for backend dependency management. Create scripts for dependency updates and security audits. Document the dependency update process.",
+            "status": "done"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Setup Database Schema in Supabase",
+        "description": "Implement the PostgreSQL database schema in Supabase as defined in the PRD.",
+        "details": "Create a Supabase project and implement the following tables:\n- organizations\n- users\n- campaigns\n- links\n- invitations\n\nEnsure all tables have the specified columns, constraints, and relationships as defined in the PRD. Set up appropriate indexes for frequently queried columns. Configure row-level security policies to ensure data isolation between organizations.",
+        "testStrategy": "Verify all tables are created with correct columns, data types, and constraints. Test foreign key relationships by inserting sample data. Validate that indexes are properly created. Test row-level security by attempting cross-organization data access.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Supabase Project",
+            "description": "Set up a new Supabase project in the cloud platform",
+            "dependencies": [],
+            "details": "Create a new Supabase project through the Supabase dashboard. Configure the project settings including region, database password, and pricing plan. Note down the project URL and API keys for future reference.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement Users Table",
+            "description": "Set up the users table with proper columns and constraints",
+            "dependencies": [
+              1
+            ],
+            "details": "Create a users table that extends Supabase's auth.users table. Include columns for user profile information such as display_name, avatar_url, and any other user-specific data. Set up appropriate constraints and indexes for optimal performance.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Implement Workspaces Table",
+            "description": "Create the workspaces table with relationships to users",
+            "dependencies": [
+              2
+            ],
+            "details": "Create a workspaces table with columns for workspace name, description, creation date, and owner_id (foreign key to users table). Set up appropriate constraints and indexes. Implement a many-to-many relationship with users through a junction table for workspace members.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement Tasks Table",
+            "description": "Set up the tasks table with proper relationships to workspaces and users",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Create a tasks table with columns for title, description, status, priority, due_date, assigned_to (foreign key to users), and workspace_id (foreign key to workspaces). Set up appropriate constraints and indexes for efficient querying.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Implement Comments Table",
+            "description": "Create the comments table with relationships to tasks and users",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "Create a comments table with columns for content, creation_date, task_id (foreign key to tasks), and user_id (foreign key to users). Set up appropriate constraints and indexes for efficient retrieval of comments for specific tasks.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Configure Row-Level Security Policies",
+            "description": "Implement RLS policies for all tables to ensure proper data access control",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Configure Row-Level Security (RLS) policies for all tables to restrict data access based on user roles and permissions. Implement policies for read, insert, update, and delete operations. Ensure workspace members can only access data within their workspaces and that sensitive data is properly protected.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Implement Database Migration System",
+        "description": "Set up Alembic for database migrations to manage schema changes over time.",
+        "details": "Initialize Alembic in the backend project:\n1. Install Alembic: `pip install alembic`\n2. Initialize Alembic: `alembic init migrations`\n3. Configure Alembic to use SQLAlchemy with the Supabase PostgreSQL connection\n4. Create initial migration script that matches the schema defined in the PRD\n5. Set up CI/CD to run migrations automatically during deployment",
+        "testStrategy": "Test migration process by running migrations on a test database. Verify that migrations can be applied and rolled back correctly. Ensure migration scripts are idempotent.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install and Initialize Alembic",
+            "description": "Set up Alembic migration tool in the project environment",
+            "dependencies": [],
+            "details": "Install Alembic package using pip, create the initial directory structure with 'alembic init', and configure the alembic.ini file with appropriate settings for the project environment. Ensure the migration environment is properly initialized.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Configure SQLAlchemy with Supabase",
+            "description": "Set up SQLAlchemy to work with Supabase database",
+            "dependencies": [
+              1
+            ],
+            "details": "Configure SQLAlchemy connection string to connect to Supabase. Update the env.py file in the Alembic directory to use the SQLAlchemy models and connection. Test the connection to ensure SQLAlchemy can properly communicate with the Supabase database.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Create Initial Migration Script",
+            "description": "Generate the first migration script to establish database schema",
+            "dependencies": [
+              2
+            ],
+            "details": "Use Alembic's autogenerate feature to create the initial migration script based on existing SQLAlchemy models. Review the generated script for accuracy and make any necessary adjustments. Test the migration locally to ensure it applies correctly.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement Migration Workflow Documentation",
+            "description": "Document the migration process for team members",
+            "dependencies": [
+              3
+            ],
+            "details": "Create comprehensive documentation explaining how to create, run, and roll back migrations. Include examples of common migration scenarios and best practices for schema changes. Ensure documentation covers both local development and production deployment contexts.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Set Up CI/CD Pipeline for Migrations",
+            "description": "Integrate database migrations into the CI/CD workflow",
+            "dependencies": [
+              3
+            ],
+            "details": "Configure the CI/CD pipeline to automatically run migrations during deployment. Implement safeguards such as database backups before migrations and rollback mechanisms in case of failures. Set up appropriate environment variables and secrets for database access in the CI/CD environment.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Create Migration Testing Framework",
+            "description": "Implement testing procedures for database migrations",
+            "dependencies": [
+              5
+            ],
+            "details": "Develop a testing framework to validate migrations before they're applied to production. Create test cases for verifying data integrity during migrations. Implement a staging environment process where migrations can be tested against production-like data before being applied to the actual production database.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Setup Authentication with Clerk",
+        "description": "Integrate Clerk authentication service for user management and JWT-based authentication.",
+        "details": "1. Create a Clerk account and project\n2. Configure Clerk with Google OAuth and Email/Password authentication options\n3. Install Clerk SDK in the frontend project\n4. Set up authentication components for sign-up, sign-in, and user profile\n5. Configure JWT verification middleware in the FastAPI backend\n6. Implement protected routes that require authentication\n7. Set up user session management and token refresh logic",
+        "testStrategy": "Test user registration and login flows with both Google OAuth and email/password. Verify JWT tokens are correctly validated by the backend. Test token expiration and refresh mechanisms. Ensure protected routes reject unauthenticated requests.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Clerk Account and Project Setup",
+            "description": "Create a Clerk account and set up a new project with appropriate authentication methods",
+            "dependencies": [],
+            "details": "1. Sign up for a Clerk account\n2. Create a new project in the Clerk dashboard\n3. Configure authentication methods (email/password, social logins)\n4. Set up the application domain and redirect URLs\n5. Obtain API keys and environment variables\n6. Configure webhook endpoints if needed",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Frontend SDK Integration",
+            "description": "Install and configure the Clerk SDK in the frontend application",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Install Clerk React SDK packages\n2. Set up environment variables for API keys\n3. Implement ClerkProvider at the root of the application\n4. Configure routing integration with Next.js\n5. Set up proper error handling for authentication failures\n6. Test basic SDK functionality",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Authentication Component Implementation",
+            "description": "Build UI components for sign-in, sign-up, and user profile management",
+            "dependencies": [
+              2
+            ],
+            "details": "1. Implement Sign In component using Clerk's SignIn component or custom UI\n2. Implement Sign Up component using Clerk's SignUp component or custom UI\n3. Create a user profile management page\n4. Implement sign-out functionality\n5. Add loading states and error handling\n6. Style components to match application design",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Backend JWT Verification Middleware",
+            "description": "Create middleware to verify Clerk JWTs in backend API routes",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Install Clerk backend SDK\n2. Create middleware for JWT verification\n3. Configure middleware to extract user information from tokens\n4. Implement proper error handling for invalid or expired tokens\n5. Set up testing for the verification middleware\n6. Document the middleware usage for the team",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Protected Route Implementation",
+            "description": "Implement route protection for authenticated-only pages and API endpoints",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "1. Create higher-order components or hooks for frontend route protection\n2. Implement redirect logic for unauthenticated users\n3. Set up role-based access control if needed\n4. Protect API routes using the JWT verification middleware\n5. Add loading states for authentication checks\n6. Test protected routes with authenticated and unauthenticated users",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Session Management and Token Refresh Logic",
+            "description": "Implement session handling and automatic token refresh mechanisms",
+            "dependencies": [
+              2,
+              4,
+              5
+            ],
+            "details": "1. Configure session duration and expiration settings in Clerk dashboard\n2. Implement automatic token refresh logic\n3. Handle session expiration gracefully in the UI\n4. Set up persistent sessions if required\n5. Implement proper session cleanup on sign-out\n6. Test session persistence and refresh scenarios",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Implement User Registration and Domain Setup",
+        "description": "Create the user registration flow that allows new users to register and set up their organization domain.",
+        "details": "1. Create a registration form component with fields for email, password, and domain name\n2. Implement form validation for all fields\n3. On successful Clerk authentication, create a new organization record in the database\n4. Create a user record linked to the organization with the Manager role\n5. Implement a welcome page/onboarding flow for new users\n6. Send a welcome email to the user with getting started instructions\n7. Redirect to the main dashboard after successful registration",
+        "testStrategy": "Test registration with valid and invalid inputs. Verify organization and user records are correctly created in the database. Test domain uniqueness validation. Verify welcome email is sent correctly. Test the entire flow from registration to dashboard access.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Registration Form Component with Validation",
+            "description": "Build a React component for user registration with client-side validation",
+            "dependencies": [],
+            "details": "Develop a form component with fields for name, email, password, organization name, and role selection. Implement validation for all fields including email format, password strength, and required fields. Add appropriate error messaging and visual feedback for validation states.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement Organization Record Creation",
+            "description": "Create backend functionality to handle organization creation in the database",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop API endpoint to receive organization data from the registration form. Implement database schema and models for organizations. Add validation to ensure organization names are unique. Include logic to handle organization settings and default configurations.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Implement User Record Creation with Role Assignment",
+            "description": "Create backend functionality to handle user creation with proper role assignment",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Develop API endpoint to create user records linked to organizations. Implement role-based access control system. Ensure secure password hashing. Create database relationships between users and organizations. Add validation for unique email addresses.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Design Welcome Page and Onboarding Flow",
+            "description": "Create the post-registration welcome experience and initial onboarding steps",
+            "dependencies": [
+              3
+            ],
+            "details": "Design welcome screen with personalized greeting. Create step-by-step onboarding guide for new users. Implement progress tracking for onboarding completion. Add tooltips and help content for key features. Ensure responsive design for all device sizes.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Implement Email Notification System",
+            "description": "Set up automated email notifications for registration confirmation",
+            "dependencies": [
+              3
+            ],
+            "details": "Integrate email service provider (SendGrid/Mailgun). Create email templates for verification and welcome messages. Implement email verification flow with secure tokens. Add tracking for email delivery and opens. Ensure compliance with email regulations.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Develop Post-Registration Navigation Flow",
+            "description": "Implement the user journey after completing registration and onboarding",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "Create navigation paths based on user role. Implement dashboard redirect after successful onboarding. Add session management and authentication persistence. Develop fallback routes for incomplete registration. Ensure smooth transition between authentication states.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Implement Role-Based Access Control",
+        "description": "Create a system for managing user roles (Manager vs. Team Member) and enforcing appropriate permissions.",
+        "details": "1. Create a middleware for the backend that extracts user role from the database based on the authenticated user\n2. Implement permission decorators for API endpoints that check user roles\n3. Create a frontend context provider for user role and permissions\n4. Implement conditional rendering of UI elements based on user role\n5. Create helper functions to check permissions for specific actions\n6. Ensure all API endpoints enforce the correct role requirements as specified in the PRD",
+        "testStrategy": "Test API endpoints with users of different roles to verify permission enforcement. Verify UI elements are correctly shown/hidden based on user role. Test edge cases like attempting to access manager-only endpoints as a team member.",
+        "priority": "high",
+        "dependencies": [
+          4,
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement backend middleware for role extraction",
+            "description": "Create middleware to extract user roles from JWT tokens and attach them to the request object",
+            "dependencies": [],
+            "details": "Develop Express middleware that decodes the JWT token, extracts the user roles, and attaches them to the request object for use in subsequent request handling. Include error handling for invalid tokens and role validation.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Create permission decorators for API endpoints",
+            "description": "Develop decorators to protect API endpoints based on required roles",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement decorators (or middleware functions) that can be applied to API route handlers to restrict access based on user roles. Include support for multiple roles and role hierarchies if needed. Ensure proper error responses when access is denied.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Implement frontend authentication context provider",
+            "description": "Create a React context provider to manage user authentication state and roles",
+            "dependencies": [],
+            "details": "Develop a React context provider that stores and provides access to the authenticated user's information, including their roles. Implement functions to check if a user has specific roles or permissions that can be used throughout the application.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Develop permission checking helper functions",
+            "description": "Create utility functions for checking permissions in both frontend and backend code",
+            "dependencies": [
+              1,
+              3
+            ],
+            "details": "Implement a set of helper functions that can be used to check if a user has the required permissions for specific actions. These should work with the role data extracted by the middleware and stored in the authentication context.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Implement conditional UI rendering based on roles",
+            "description": "Create components and hooks for conditionally rendering UI elements based on user roles",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Develop React components and hooks that use the authentication context to conditionally render UI elements based on the user's roles. This includes hiding/showing navigation items, buttons, and other interactive elements based on permissions.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Test and document the RBAC implementation",
+            "description": "Create comprehensive tests and documentation for the role-based access control system",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Write unit and integration tests for both frontend and backend RBAC components. Create documentation explaining the RBAC system, including how to assign roles, check permissions, and extend the system for future requirements.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Implement Team Member Invitation System",
+        "description": "Create functionality for Managers to invite team members to join their organization.",
+        "details": "1. Create an invitation form component for Managers to input email addresses\n2. Implement the `/api/v1/invitations` endpoint to generate and store invitation records\n3. Generate secure, time-limited invitation tokens\n4. Send invitation emails with registration links containing the token\n5. Create a registration page that accepts and validates invitation tokens\n6. Implement logic to associate new users with the correct organization based on the invitation\n7. Update invitation status when accepted\n8. Enforce the 10-user limit per organization",
+        "testStrategy": "Test invitation creation, email delivery, and acceptance flow. Verify invitation tokens expire correctly. Test user limit enforcement. Verify users are correctly associated with the organization upon accepting an invitation.",
+        "priority": "medium",
+        "dependencies": [
+          5,
+          6
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Invitation Form Component",
+            "description": "Develop a user interface component for sending invitations to new users",
+            "dependencies": [],
+            "details": "Build a React component that allows organization admins to invite new users by email. Include form validation for email format, role selection dropdown, and submission handling. Add appropriate error and success messaging. The form should prevent duplicate invitations to the same email address.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement Invitation API Endpoint",
+            "description": "Create backend API endpoints to handle invitation requests",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop REST API endpoints for creating, listing, and revoking invitations. Implement proper authentication and authorization checks to ensure only organization admins can send invitations. Store invitation data in the database with appropriate fields (email, role, organization ID, expiration date, etc.).",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Implement Secure Token Generation and Email Delivery",
+            "description": "Create a system for generating secure invitation tokens and sending invitation emails",
+            "dependencies": [
+              2
+            ],
+            "details": "Generate cryptographically secure tokens with appropriate expiration times. Implement email templates for invitation messages with branding elements. Set up email delivery service integration. Include tracking for sent invitations and implement rate limiting to prevent abuse.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Build Token Validation and Registration Page",
+            "description": "Create a registration flow for users who receive invitation links",
+            "dependencies": [
+              3
+            ],
+            "details": "Develop a registration page that validates invitation tokens. Show appropriate error messages for expired or invalid tokens. Pre-fill the email field based on the invitation. Collect necessary user information (name, password, etc.) and implement validation. Handle the complete registration process for invited users.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Implement Organization Association Logic",
+            "description": "Create logic to associate newly registered users with the correct organization",
+            "dependencies": [
+              4
+            ],
+            "details": "Implement backend logic to associate new users with the organization that sent the invitation. Assign the correct role based on the invitation details. Update organization member counts and handle any necessary notifications to organization admins about successful registrations.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Implement User Limit Enforcement",
+            "description": "Add logic to enforce organization user limits based on subscription plans",
+            "dependencies": [
+              5
+            ],
+            "details": "Check organization user limits before allowing new invitations to be sent. Implement clear error messaging when limits are reached. Add upgrade prompts for organizations near their user limits. Create admin dashboard components to display current user count and limits. Ensure invitation counts and pending invitations are factored into limit calculations.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Implement User Management Interface",
+        "description": "Create an interface for Managers to view and manage team members within their organization.",
+        "details": "1. Create a User Management page accessible only to Managers\n2. Implement the `/api/v1/organization/users` endpoint to list all users in the organization\n3. Display users in a table with their email, role, and join date\n4. Implement the `/api/v1/organization/users/{user_id}` DELETE endpoint for removing users\n5. Add a confirmation dialog before user removal\n6. Show the current user count vs. the maximum allowed (10)\n7. Display pending invitations with the ability to resend or cancel them",
+        "testStrategy": "Test listing users with various organization sizes. Verify user removal works correctly and updates the database. Test that managers cannot remove themselves. Verify invitation management functions work correctly.",
+        "priority": "medium",
+        "dependencies": [
+          6,
+          7
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create User Management Page Component",
+            "description": "Develop the main user management page component with responsive layout",
+            "dependencies": [],
+            "details": "Create a React component for the user management page that includes a table/list view of users, search functionality, and pagination. Ensure the layout is responsive and follows the application's design system. Include proper loading states and error handling.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement User Listing API Endpoint",
+            "description": "Create backend API endpoint for retrieving user data with filtering and pagination",
+            "dependencies": [],
+            "details": "Develop a RESTful API endpoint that returns user data with support for pagination, sorting, and filtering. Implement proper permission checks to ensure only authorized users can access this data. Include user attributes like name, email, role, and last login date in the response.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Connect Frontend to User Listing API",
+            "description": "Integrate the user management component with the backend API",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Create service/hooks to fetch user data from the API endpoint and display it in the user management component. Implement client-side state management for the user data, including handling loading states, errors, and pagination controls.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement User Removal Functionality",
+            "description": "Create UI and API for user removal with confirmation dialog",
+            "dependencies": [
+              3
+            ],
+            "details": "Add a delete button for each user in the list. Implement a confirmation dialog to prevent accidental deletions. Create the backend API endpoint for user removal. Add logic to prevent users from removing themselves and implement proper permission checks. Update the UI to reflect changes after successful deletion.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Develop User Invitation Feature",
+            "description": "Create functionality to invite new users to the system",
+            "dependencies": [
+              3
+            ],
+            "details": "Implement an 'Invite User' button and form that allows admins to send invitations via email. Create the backend API endpoint to handle invitation creation and email sending. Include fields for email, role assignment, and optional personalized message. Add validation to prevent duplicate invitations.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Implement Invitation Management Features",
+            "description": "Add functionality to view, resend, and cancel pending invitations",
+            "dependencies": [
+              5
+            ],
+            "details": "Create a section in the user management interface to display pending invitations. Implement features to resend invitations and cancel pending ones. Add the necessary backend API endpoints to support these operations. Include status indicators for invitations (pending, accepted, expired) and implement proper permission checks.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Implement Campaign Creation Form",
+        "description": "Create a form for users to create new marketing campaigns with all required metadata.",
+        "details": "1. Create a form component with fields for campaign name, objective, audience details, etc.\n2. Implement form validation for required fields\n3. Create the `/api/v1/campaigns` POST endpoint to store new campaigns\n4. Generate a unique, human-readable Campaign ID for each new campaign\n5. Store the campaign in the database with association to the creator and organization\n6. Implement success/error notifications\n7. Redirect to the campaign detail view after successful creation",
+        "testStrategy": "Test campaign creation with valid and invalid inputs. Verify campaigns are correctly stored in the database with all metadata. Test unique ID generation. Verify creator and organization associations are correct.",
+        "priority": "high",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design Campaign Form Component",
+            "description": "Create a React form component for campaign creation with all necessary fields and UI elements",
+            "dependencies": [],
+            "details": "Implement a form component with fields for campaign name, description, start/end dates, budget, target audience, and campaign type. Include proper styling and responsive design. Use Formik or React Hook Form for form management.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement Form Validation Logic",
+            "description": "Add client-side validation to ensure all campaign data is valid before submission",
+            "dependencies": [
+              1
+            ],
+            "details": "Create validation rules for all form fields: required fields, date validation (end date after start date), budget validation (positive numbers only), character limits for text fields. Show appropriate error messages. Prevent form submission if validation fails.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Create Campaign API Endpoint",
+            "description": "Develop the backend API endpoint to handle campaign creation requests",
+            "dependencies": [],
+            "details": "Create a POST endpoint at /api/campaigns. Implement request validation, authentication checks, and proper error handling. Return appropriate status codes and response messages for success and failure cases.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement Unique ID Generation and Database Storage",
+            "description": "Create logic for generating unique campaign IDs and storing campaign data in the database",
+            "dependencies": [
+              3
+            ],
+            "details": "Implement a reliable unique ID generation mechanism (UUID or auto-increment). Create database schema for campaigns table with all required fields. Implement database transaction handling to ensure data integrity. Add proper error handling for database operations.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Connect Form to API",
+            "description": "Integrate the frontend form with the backend API endpoint",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Implement form submission handler to send data to the API. Add loading states during submission. Implement error handling for API failures. Use appropriate data transformation between frontend and backend formats if needed.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Implement Success Handling and Navigation Flow",
+            "description": "Create success feedback and navigation logic after successful campaign creation",
+            "dependencies": [
+              5
+            ],
+            "details": "Show success notification/message after campaign creation. Implement redirection to campaign details page or campaigns list. Add option to create another campaign. Ensure proper state reset after form submission.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Implement Campaign Listing and Dashboard",
+        "description": "Create a dashboard view that displays all campaigns for the user's organization with filtering and sorting capabilities.",
+        "details": "1. Implement the `/api/v1/campaigns` GET endpoint to list campaigns for the user's organization\n2. Create a dashboard component with a table/grid view of campaigns\n3. Implement filtering by campaign name, date, creator, etc.\n4. Add sorting functionality for all columns\n5. Implement pagination for large campaign lists\n6. Display key campaign metadata in the list view\n7. Add quick action buttons for viewing, editing, and managing campaigns\n8. Implement a search function for finding specific campaigns",
+        "testStrategy": "Test campaign listing with various filter and sort options. Verify pagination works correctly with large datasets. Test search functionality with different queries. Verify only campaigns from the user's organization are displayed.",
+        "priority": "high",
+        "dependencies": [
+          9
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Campaign Listing API Endpoint",
+            "description": "Develop a RESTful API endpoint that returns campaign data with appropriate filtering, sorting, and pagination parameters",
+            "dependencies": [],
+            "details": "Implement a GET /api/campaigns endpoint that accepts query parameters for filtering (status, date range, type), sorting (by name, date, performance), and pagination (page number, items per page). Ensure proper error handling and response formatting. Include campaign metrics in the response data.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement Dashboard Component Structure",
+            "description": "Create the base dashboard component with table/grid view for displaying campaign data",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop a responsive React component that displays campaign data in both table and grid views with toggleable display options. Include column definitions for campaign name, status, start/end dates, budget, and key performance metrics. Implement basic styling with CSS/SCSS following the design system.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Implement Filtering Functionality",
+            "description": "Add filtering capabilities to the dashboard to allow users to filter campaigns by various criteria",
+            "dependencies": [
+              2
+            ],
+            "details": "Create filter controls for campaign status, date range, campaign type, and performance metrics. Implement filter state management using React hooks or Redux. Ensure filters are reflected in the API requests and URL parameters for shareable filtered views. Add clear filter functionality.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement Sorting Functionality",
+            "description": "Add column sorting capabilities to the campaign dashboard",
+            "dependencies": [
+              2
+            ],
+            "details": "Enable sorting for all relevant columns (name, date, budget, performance metrics). Implement visual indicators for sort direction. Ensure sorting state is maintained during filtering and pagination. Optimize for performance with potentially large datasets.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Implement Pagination",
+            "description": "Add pagination controls to navigate through large sets of campaign data",
+            "dependencies": [
+              2
+            ],
+            "details": "Create pagination controls with page numbers, previous/next buttons, and items per page selector. Implement efficient data fetching that only retrieves the current page of data. Maintain pagination state during filtering and sorting operations. Add loading indicators during page transitions.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Implement Search Functionality",
+            "description": "Add search capability to quickly find specific campaigns",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Create a search input that filters campaigns by name or ID. Implement debouncing to prevent excessive API calls during typing. Add highlighting of search terms in results. Ensure search works in conjunction with existing filters, sorting, and pagination.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Implement Campaign Detail View",
+        "description": "Create a detailed view for individual campaigns showing all metadata and associated UTM links.",
+        "details": "1. Implement the `/api/v1/campaigns/{campaign_id}` GET endpoint\n2. Create a campaign detail page component\n3. Display all campaign metadata (name, objective, audience details, etc.)\n4. Show the campaign creator and creation/update dates\n5. Implement the `/api/v1/campaigns/{campaign_id}/links` GET endpoint\n6. Display a list of all UTM links associated with the campaign\n7. Add edit and delete buttons with appropriate permission checks\n8. Implement a \"Generate Link\" button to create new UTM links for the campaign",
+        "testStrategy": "Test campaign detail view with various campaigns. Verify all metadata is correctly displayed. Test permission-based UI elements. Verify associated links are correctly listed. Test navigation between campaign list and detail views.",
+        "priority": "medium",
+        "dependencies": [
+          9,
+          10
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Campaign Detail API Endpoint",
+            "description": "Implement a REST API endpoint to fetch detailed campaign information",
+            "dependencies": [],
+            "details": "Create a GET endpoint at /api/campaigns/:id that returns comprehensive campaign details including name, description, status, dates, metrics, and owner information. Implement proper error handling for non-existent campaigns and permission validation.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement Campaign Detail Data Fetching",
+            "description": "Create service and hook for fetching campaign details from the API",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop a service function to call the campaign detail API endpoint. Create a React hook (useCampaignDetail) that handles loading states, error handling, and data caching. Implement proper TypeScript interfaces for the campaign detail data structure.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Build Campaign Detail Page Component",
+            "description": "Create the main UI component for displaying campaign details",
+            "dependencies": [
+              2
+            ],
+            "details": "Develop a CampaignDetailPage component that displays all campaign information in a well-structured layout. Include sections for campaign metadata, performance metrics, and description. Implement loading states and error handling in the UI.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement Associated Links Listing",
+            "description": "Create functionality to display and manage links associated with the campaign",
+            "dependencies": [
+              3
+            ],
+            "details": "Add a section in the campaign detail page that lists all associated links with their metrics. Implement sorting and filtering capabilities. Create a component to display individual link cards with their key performance indicators.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Implement Permission-Based Action Buttons",
+            "description": "Add action buttons with proper permission checks",
+            "dependencies": [
+              3
+            ],
+            "details": "Create a component for action buttons (Edit, Delete, Pause/Resume) that only appear based on user permissions. Implement the permission checking logic that integrates with the authentication system. Ensure buttons are disabled when appropriate based on campaign status.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Integrate and Test Campaign Detail View",
+            "description": "Integrate all components and perform comprehensive testing",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "Connect all components into a cohesive campaign detail view. Write unit tests for individual components and integration tests for the entire flow. Test different permission scenarios and edge cases like loading states and error handling. Ensure responsive design works across device sizes.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Implement Campaign Editing Functionality",
+        "description": "Create functionality for users to edit existing campaign metadata.",
+        "details": "1. Create an edit form component pre-populated with existing campaign data\n2. Implement the `/api/v1/campaigns/{campaign_id}` PUT endpoint\n3. Add validation to ensure only the creator or a Manager can edit a campaign\n4. Implement form validation for all editable fields\n5. Update the campaign record in the database\n6. Add an audit trail for tracking significant changes\n7. Implement success/error notifications\n8. Refresh the campaign detail view after successful updates",
+        "testStrategy": "Test editing campaigns with valid and invalid inputs. Verify permission checks prevent unauthorized edits. Test that all fields can be correctly updated. Verify audit trail records changes correctly.",
+        "priority": "medium",
+        "dependencies": [
+          9,
+          11
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Campaign Edit Form Component",
+            "description": "Develop a form component that pre-populates with existing campaign data",
+            "dependencies": [],
+            "details": "Build a React form component that accepts the current campaign data as props and displays all editable fields. Include form validation for required fields and data types. Ensure the component handles all campaign properties correctly and maintains the original values until explicitly changed.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement Campaign Update API Endpoint",
+            "description": "Create a backend endpoint to handle campaign updates with proper permission validation",
+            "dependencies": [],
+            "details": "Develop a PUT or PATCH endpoint at '/api/campaigns/:id' that accepts updated campaign data. Implement middleware to verify the user has permission to edit the campaign. Include validation of incoming data and handle partial updates appropriately.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Connect Edit Form to API",
+            "description": "Wire up the edit form to submit changes to the update API endpoint",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Add submission handling to the edit form component that collects form data, transforms it to the required API format, and sends it to the update endpoint. Implement loading states during submission and error handling for failed requests.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement Audit Trail Logging",
+            "description": "Create a system to track and log all changes made to campaigns",
+            "dependencies": [
+              2
+            ],
+            "details": "Extend the update endpoint to compare incoming data with existing data and log all changes to an audit table. Include user ID, timestamp, campaign ID, field name, old value, and new value in the audit records. Ensure this process is transactional with the update operation.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Add Success Handling and View Refreshing",
+            "description": "Implement UI feedback and data refreshing after successful updates",
+            "dependencies": [
+              3
+            ],
+            "details": "Add success notifications to inform users when updates are complete. Implement logic to refresh the campaign view with updated data, either by refetching from the API or updating the local state. Consider optimistic updates for better UX.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Create Edit History Display Component",
+            "description": "Develop a UI component to show the audit trail of campaign changes",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "Build a component that fetches and displays the audit history for a campaign. Include filtering options by date range and change type. Format the display to clearly show what changed, when, and by whom. Consider pagination for campaigns with extensive edit histories.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Implement Campaign Deletion",
+        "description": "Create functionality for Managers to delete campaigns.",
+        "details": "1. Add a delete button to the campaign detail view (visible only to Managers)\n2. Implement a confirmation dialog before deletion\n3. Create the `/api/v1/campaigns/{campaign_id}` DELETE endpoint\n4. Validate that the user has Manager permissions\n5. Implement cascading deletion of associated UTM links\n6. Remove the campaign record from the database\n7. Redirect to the campaign dashboard after successful deletion\n8. Implement success/error notifications",
+        "testStrategy": "Test campaign deletion as both Manager and Team Member roles. Verify associated links are correctly deleted. Test that only Managers can delete campaigns. Verify the database is correctly updated after deletion.",
+        "priority": "low",
+        "dependencies": [
+          9,
+          11
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement delete button in campaign UI",
+            "description": "Add a delete button to the campaign detail view that triggers the deletion flow",
+            "dependencies": [],
+            "details": "Add a visually distinct delete button in the campaign management interface. Position it appropriately in the UI (likely in the campaign actions menu or as a standalone button with appropriate warning styling). Ensure it's only visible to users with deletion permissions.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Create confirmation dialog component",
+            "description": "Develop a reusable confirmation dialog that warns users about the permanent nature of deletion",
+            "dependencies": [
+              1
+            ],
+            "details": "Build a modal dialog that clearly explains the consequences of campaign deletion, including loss of associated data. Include warning text, cancel and confirm buttons with appropriate styling. Ensure the confirmation button requires deliberate action (e.g., typing 'DELETE' or similar safeguard).",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Implement campaign deletion API endpoint",
+            "description": "Create a backend endpoint that handles campaign deletion requests",
+            "dependencies": [],
+            "details": "Develop a DELETE endpoint at /api/campaigns/:id that accepts deletion requests. Implement proper error handling and response codes. Document the API endpoint for team reference.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Add permission validation for deletion",
+            "description": "Implement permission checks to ensure only authorized users can delete campaigns",
+            "dependencies": [
+              3
+            ],
+            "details": "Add middleware or service logic that verifies the requesting user has appropriate permissions to delete the campaign. Check both user role permissions and campaign ownership. Return appropriate error messages for unauthorized attempts.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Implement cascading deletion logic",
+            "description": "Ensure all related campaign data is properly deleted or handled",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Develop the backend logic to handle all related data when a campaign is deleted. This includes campaign metrics, associated content, user assignments, etc. Consider using database transactions to ensure data integrity. Determine whether to hard delete or soft delete (archive) the campaign data based on business requirements.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Handle post-deletion navigation and feedback",
+            "description": "Implement proper UI feedback and navigation after successful deletion",
+            "dependencies": [
+              2,
+              5
+            ],
+            "details": "After successful deletion, redirect the user to an appropriate page (likely the campaigns list). Show a success notification confirming the deletion. Update any cached campaign lists in the frontend to reflect the deletion without requiring a full page refresh.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Implement UTM Link Generation Form",
+        "description": "Create a form for generating UTM-tagged links associated with a campaign.",
+        "details": "1. Create a form component for UTM link generation\n2. Pre-fill the `utm_campaign` field from the parent campaign\n3. Implement a dropdown for `utm_source` with the list of 100 marketing vendors\n4. Add fields for destination URL, `utm_medium`, `utm_content`, and `utm_term`\n5. Implement form validation for required fields\n6. Generate the full UTM-tagged URL with proper encoding\n7. Implement the `/api/v1/campaigns/{campaign_id}/links` POST endpoint\n8. Store the generated link in the database associated with the campaign\n9. Add a \"Copy to Clipboard\" button for the generated link",
+        "testStrategy": "Test link generation with various input combinations. Verify UTM parameters are correctly encoded in the URL. Test that links are correctly associated with campaigns in the database. Verify the copy to clipboard functionality works correctly.",
+        "priority": "high",
+        "dependencies": [
+          11
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create UTM form component structure",
+            "description": "Build the basic form component with all required UTM fields (source, medium, campaign, term, content) and URL input",
+            "dependencies": [],
+            "details": "Create a React component with form fields for all UTM parameters. Include validation for required fields. Style the form according to design guidelines. Add proper labels and placeholder text for each field.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement source dropdown with vendor list",
+            "description": "Create a dropdown component for the UTM source field that includes a predefined list of vendors",
+            "dependencies": [
+              1
+            ],
+            "details": "Fetch vendor list from API or use a predefined array. Implement the dropdown with search functionality. Allow custom entries in addition to predefined options. Ensure proper state management for the selected value.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Develop URL generation with proper encoding",
+            "description": "Create utility functions to generate properly encoded UTM URLs based on form inputs",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement functions to validate the base URL. Create logic to append UTM parameters with proper encoding. Handle edge cases like existing query parameters in the base URL. Add validation to ensure generated URLs are properly formatted.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Build link creation API endpoint",
+            "description": "Create a backend API endpoint to save generated UTM links to the database",
+            "dependencies": [
+              3
+            ],
+            "details": "Design database schema for storing UTM links. Implement API endpoint for creating new UTM links. Add validation for incoming data. Include error handling and appropriate HTTP status codes. Document the API for frontend integration.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Implement copy to clipboard functionality",
+            "description": "Add a button to copy the generated UTM link to the clipboard",
+            "dependencies": [
+              3
+            ],
+            "details": "Research and implement a cross-browser compatible clipboard API. Add visual feedback when copy is successful. Handle clipboard permissions and fallbacks for browsers that don't support the Clipboard API. Test on multiple browsers.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Add pre-filled fields functionality",
+            "description": "Implement logic to pre-fill form fields based on previous entries or templates",
+            "dependencies": [
+              1,
+              4
+            ],
+            "details": "Create a mechanism to store and retrieve common UTM patterns. Implement template selection functionality. Add logic to pre-fill form fields based on selected template or previous entries. Include ability to save new templates.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "title": "Implement UTM Link Management",
+        "description": "Create functionality for viewing, editing, and deleting UTM links.",
+        "details": "1. Display UTM links in a table within the campaign detail view\n2. Implement the `/api/v1/links/{link_id}` PUT endpoint for updating links\n3. Create an edit form pre-populated with existing link data\n4. Implement the `/api/v1/links/{link_id}` DELETE endpoint\n5. Add edit and delete buttons for each link\n6. Implement confirmation dialogs before deletion\n7. Add bulk selection and operation capabilities\n8. Implement filtering and sorting for the links table\n9. Add a \"Copy to Clipboard\" button for each link",
+        "testStrategy": "Test editing and deleting links with various scenarios. Verify bulk operations work correctly. Test filtering and sorting of the links table. Verify permission checks prevent unauthorized operations.",
+        "priority": "medium",
+        "dependencies": [
+          14
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Links Table Component",
+            "description": "Develop a table component to display UTM links with columns for key attributes",
+            "dependencies": [],
+            "details": "Build a responsive table component that displays UTM links with columns for link name, destination URL, UTM parameters, creation date, and click count. Include row selection capability for bulk operations. Implement pagination for handling large numbers of links.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement Link Update API Endpoint",
+            "description": "Create backend API endpoint for updating existing UTM links",
+            "dependencies": [],
+            "details": "Develop a RESTful API endpoint that handles PUT/PATCH requests to update UTM link properties. Include validation for required fields and proper error handling. Ensure the endpoint returns appropriate status codes and response messages.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Build Link Update Form",
+            "description": "Create a form interface for editing UTM link properties",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Design and implement a form component that allows users to edit UTM link properties including name, destination URL, and UTM parameters. Include validation for required fields and proper error handling. Connect the form to the update API endpoint.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement Link Deletion Functionality",
+            "description": "Add capability to delete individual and multiple UTM links",
+            "dependencies": [
+              1
+            ],
+            "details": "Create API endpoint for link deletion. Implement confirmation dialog before deletion. Add delete buttons to table rows for individual deletion. Connect bulk deletion to the row selection functionality in the links table.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Develop Bulk Operations",
+            "description": "Implement functionality for performing actions on multiple selected links",
+            "dependencies": [
+              1,
+              4
+            ],
+            "details": "Create UI controls for bulk operations including delete, tag, and category assignment. Implement the backend logic to process bulk operations efficiently. Add progress indicators for operations that might take time to complete.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Add Filtering and Sorting Capabilities",
+            "description": "Implement filtering and sorting functionality for the links table",
+            "dependencies": [
+              1
+            ],
+            "details": "Add filter controls for searching by name, URL, tags, and date ranges. Implement column sorting for all relevant columns. Create the backend query logic to support filtering and sorting operations. Ensure the UI updates to reflect the current filter and sort state.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "title": "Implement Campaign Export Functionality",
+        "description": "Create functionality to export campaign data to CSV format.",
+        "details": "1. Add an \"Export\" button to the campaign dashboard and detail views\n2. Implement CSV generation logic for campaign data\n3. Include all relevant campaign metadata in the export\n4. Optionally include associated UTM links in the export\n5. Generate a downloadable CSV file\n6. Implement proper CSV encoding and formatting\n7. Add a loading indicator during export generation",
+        "testStrategy": "Test exporting campaigns with and without associated links. Verify the CSV format is correct and includes all relevant data. Test with various campaign sizes and metadata combinations.",
+        "priority": "low",
+        "dependencies": [
+          10,
+          11
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design export button and options UI",
+            "description": "Create the UI elements for the campaign export functionality",
+            "dependencies": [],
+            "details": "Design and implement a clean export button in the campaign view. Include a dropdown with export options (e.g., 'All data', 'Summary only', 'Custom fields'). Ensure the UI is consistent with the existing design system and is responsive across device sizes.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement export options modal",
+            "description": "Create a modal dialog for configuring export parameters",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop a modal that appears when the export button is clicked, allowing users to select specific data fields to include in the export, date ranges, and format options. Include validation to ensure at least one field is selected.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Develop data retrieval service",
+            "description": "Create a service to fetch and prepare campaign data for export",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement a service that retrieves campaign data based on the selected export options. Handle pagination for large datasets and ensure all related data is properly joined. Include error handling for failed data retrieval.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement CSV generation logic",
+            "description": "Create the functionality to convert campaign data to CSV format",
+            "dependencies": [
+              3
+            ],
+            "details": "Develop the logic to transform the retrieved campaign data into properly formatted CSV. Handle special characters, ensure proper encoding (UTF-8), and implement column headers based on selected fields. Test with various data types and large datasets to ensure performance.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Create loading indicators",
+            "description": "Implement visual feedback during the export process",
+            "dependencies": [
+              1
+            ],
+            "details": "Design and implement loading indicators to show progress during data retrieval and CSV generation. Include percentage completion if possible, or use an indeterminate progress indicator for processes where progress can't be measured.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Implement file download functionality",
+            "description": "Create the mechanism to deliver the CSV file to the user",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "Implement the browser download functionality to deliver the generated CSV file to the user. Include proper file naming (e.g., 'campaign_name_date.csv'), handle browser security restrictions, and provide fallback methods for browsers with limited download capabilities. Test across different browsers and devices.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "title": "Implement Subscription Management with Stripe",
+        "description": "Integrate Stripe for subscription billing and management.",
+        "details": "1. Create a Stripe account and configure products/prices for monthly ($7.99) and annual ($5.99/month) plans\n2. Install Stripe SDK in the backend\n3. Implement the `/api/v1/billing/create-checkout-session` endpoint\n4. Create a billing page component in the frontend\n5. Implement the Stripe Checkout flow\n6. Set up webhook handling for subscription events (created, updated, canceled)\n7. Update organization subscription status based on webhook events\n8. Implement the `/api/v1/billing/portal` endpoint for redirecting to the Stripe billing portal\n9. Add subscription status indicators in the UI",
+        "testStrategy": "Test subscription creation for both monthly and annual plans. Verify webhook handling correctly updates subscription status. Test subscription cancellation and updates. Verify the billing portal redirect works correctly.",
+        "priority": "high",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Stripe Account and Product Setup",
+            "description": "Create and configure Stripe account with appropriate products, pricing plans, and subscription options",
+            "dependencies": [],
+            "details": "1. Create a Stripe account or use existing account\n2. Define products and pricing tiers in Stripe dashboard\n3. Configure subscription billing cycles and trial periods\n4. Set up webhook endpoints in Stripe dashboard\n5. Generate and securely store API keys for development and production environments",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Backend Stripe SDK Integration",
+            "description": "Integrate Stripe SDK into the backend application and implement core payment functionality",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Install Stripe SDK in backend project\n2. Create configuration for API keys and environment settings\n3. Implement service layer for Stripe interactions\n4. Set up error handling and logging for Stripe operations\n5. Create unit tests for Stripe service functions",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Checkout Session API Endpoint",
+            "description": "Create API endpoint to generate Stripe checkout sessions for subscription purchases",
+            "dependencies": [
+              2
+            ],
+            "details": "1. Implement endpoint to create checkout sessions\n2. Add authentication and authorization checks\n3. Link checkout sessions to organization/user accounts\n4. Handle success and cancel URLs for checkout flow\n5. Add validation for subscription plan selection",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Frontend Billing Page Implementation",
+            "description": "Create user interface for displaying subscription options and initiating checkout process",
+            "dependencies": [
+              3
+            ],
+            "details": "1. Design billing page layout with pricing tiers\n2. Implement subscription plan selection UI\n3. Add checkout button that redirects to Stripe checkout\n4. Display current subscription status for existing subscribers\n5. Add loading states and error handling for API interactions",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Webhook Handling for Subscription Events",
+            "description": "Implement webhook endpoint to process Stripe events for subscription lifecycle management",
+            "dependencies": [
+              2
+            ],
+            "details": "1. Create webhook endpoint with signature verification\n2. Implement handlers for key events (payment_succeeded, payment_failed, subscription_created, etc.)\n3. Set up database transactions for subscription status updates\n4. Add logging for webhook events\n5. Create tests for webhook event processing",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Billing Portal and Subscription Management",
+            "description": "Implement customer portal for subscription management and integrate with organization status",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "1. Create API endpoint to generate Stripe customer portal sessions\n2. Update organization model with subscription status fields\n3. Implement subscription status checks for feature access control\n4. Add UI for accessing customer portal\n5. Create admin view for subscription management",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 18,
+        "title": "Implement Free Trial System",
+        "description": "Create a 7-day free trial system for new organizations.",
+        "details": "1. Set the default subscription status to 'trialing' for new organizations\n2. Calculate and store the trial end date (7 days from registration)\n3. Implement a trial status check in the application\n4. Create UI components to show trial status and remaining days\n5. Add prompts to subscribe before the trial ends\n6. Implement logic to restrict access after the trial expires\n7. Create email notifications for trial expiration (3 days before, 1 day before, on expiration)\n8. Provide a smooth transition from trial to paid subscription",
+        "testStrategy": "Test trial initialization for new organizations. Verify trial expiration logic works correctly. Test the transition from trial to paid subscription. Verify email notifications are sent at the correct times.",
+        "priority": "medium",
+        "dependencies": [
+          5,
+          17
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement trial status initialization",
+            "description": "Create functionality to initialize trial status for new organizations when they first sign up",
+            "dependencies": [],
+            "details": "Add a trial_start_date and trial_end_date field to the Organization model. When a new organization is created, automatically set trial_start_date to current date and trial_end_date to 14 days later. Include a trial_status field with possible values: 'active', 'expired', 'converted'.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Develop trial status checking logic",
+            "description": "Create a service to check and update trial status based on current date and subscription status",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement a TrialService class with methods to check if trial is active, expired, or if the organization has converted to a paid plan. Include logic to automatically update trial_status when trial_end_date is reached. This service should be callable from various parts of the application.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Create UI components for trial status display",
+            "description": "Design and implement UI elements to show trial status and remaining days",
+            "dependencies": [
+              2
+            ],
+            "details": "Create a TrialBanner component that displays remaining trial days and call-to-action for subscription. Implement a more detailed TrialStatusPage showing trial information and subscription options. Ensure these components reactively update based on trial status changes.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement access restriction logic",
+            "description": "Add middleware to restrict access to certain features after trial expiration",
+            "dependencies": [
+              2
+            ],
+            "details": "Create a middleware that checks trial status before allowing access to premium features. Implement graceful degradation of functionality when trial expires. Add redirect logic to subscription page when users attempt to access restricted features after expiration.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Develop email notification system",
+            "description": "Create an automated email system to notify users about trial status and expiration",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Implement scheduled emails to be sent at key points: trial start, 7 days before expiration, 1 day before expiration, and upon expiration. Create email templates with personalized content and clear call-to-action buttons for subscription conversion.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Create trial-to-paid conversion flow",
+            "description": "Implement the process for converting from trial to paid subscription",
+            "dependencies": [
+              2,
+              3,
+              5
+            ],
+            "details": "Design and implement a seamless conversion flow from trial to paid plan. Include payment processing integration, subscription plan selection, and automatic status update upon successful payment. Ensure proper handling of trial data during conversion.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 19,
+        "title": "Implement User Limit Enforcement",
+        "description": "Create a system to enforce the 10-user limit per organization.",
+        "details": "1. Add a user count check before processing new invitations\n2. Implement a database query to get the current user count for an organization\n3. Create UI indicators showing current user count vs. maximum (10)\n4. Display appropriate error messages when attempting to exceed the limit\n5. Disable the invite button when the limit is reached\n6. Add user count validation in the invitation API endpoint\n7. Consider pending invitations in the user count calculation",
+        "testStrategy": "Test invitation creation at various user counts (9, 10, 11). Verify error messages are displayed when the limit is reached. Test the UI indicators for user count. Verify the API correctly rejects invitations that would exceed the limit.",
+        "priority": "medium",
+        "dependencies": [
+          7,
+          8
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement User Count Query",
+            "description": "Create a database query to accurately count active users in the system",
+            "dependencies": [],
+            "details": "Develop an efficient query to count active users, ensuring it excludes deleted or deactivated accounts. This query will be used as the foundation for limit enforcement. Include caching mechanisms to avoid performance issues with frequent checks.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Create User Limit Configuration",
+            "description": "Implement a configuration system for user limits based on account tier",
+            "dependencies": [
+              1
+            ],
+            "details": "Design a flexible configuration system that defines user limits based on account tiers. This should include default limits, the ability to override limits for specific accounts, and a mechanism to retrieve the current limit for any given account.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Develop Invitation Validation Logic",
+            "description": "Create validation logic to check user limits before allowing new invitations",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Implement logic that validates whether a new user invitation would exceed the account's user limit. This should be integrated into the invitation creation flow and prevent invitations that would exceed the limit.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Add UI Indicators for User Limits",
+            "description": "Implement UI elements showing current user count and limits",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Add visual indicators in the user management interface showing the current user count, the maximum allowed users, and how close the account is to reaching its limit. Consider using progress bars or other visual cues to make this information clear.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Implement Error Messages for Limit Violations",
+            "description": "Create clear error messages when user limits would be exceeded",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Design and implement user-friendly error messages that appear when attempting to exceed user limits. These should explain the limitation clearly and potentially offer upgrade options if applicable.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Add API Endpoint Validation",
+            "description": "Implement user limit validation in all relevant API endpoints",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Add validation logic to all API endpoints that could potentially create or invite new users. This ensures that limits are enforced consistently across the application, including when accessed via API rather than the UI.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 20,
+        "title": "Implement Landing Page and Marketing Site",
+        "description": "Create a public-facing website with product information, pricing, and sign-up/login links.",
+        "details": "1. Design and implement a modern, conversion-optimized landing page\n2. Create sections for features, benefits, and pricing\n3. Implement responsive design for all device sizes\n4. Add call-to-action buttons for free trial sign-up\n5. Include login links for existing users\n6. Create a pricing comparison table for monthly and annual plans\n7. Add testimonials and social proof sections (placeholders for now)\n8. Implement SEO best practices (meta tags, structured data, etc.)",
+        "testStrategy": "Test the landing page on various devices and screen sizes. Verify all links and buttons work correctly. Test navigation between the marketing site and the application. Verify SEO elements are correctly implemented.",
+        "priority": "medium",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create responsive layout structure",
+            "description": "Implement the core responsive layout framework using CSS Grid/Flexbox that adapts to desktop, tablet, and mobile devices",
+            "dependencies": [],
+            "details": "Create HTML structure with semantic tags, implement responsive breakpoints (mobile: 320-480px, tablet: 481-768px, desktop: 769px+), set up CSS variables for consistent theming, and ensure container responsiveness with appropriate max-width constraints",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Develop feature showcase section",
+            "description": "Design and implement the product features section with engaging visuals and concise descriptions",
+            "dependencies": [
+              1
+            ],
+            "details": "Create card-based feature displays, implement hover effects for interactive elements, ensure proper spacing between feature items, add appropriate icons/images for each feature, and write compelling feature descriptions that highlight key benefits",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Build pricing section with comparison table",
+            "description": "Create a clear, user-friendly pricing section that showcases different tiers and encourages conversion",
+            "dependencies": [
+              1
+            ],
+            "details": "Design pricing cards for different tiers, implement a feature comparison table, highlight recommended plans, add tooltips for explaining features, ensure mobile-friendly pricing display, and include FAQ section addressing common pricing questions",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement navigation and CTA elements",
+            "description": "Create sticky navigation bar and strategically placed call-to-action buttons to maximize conversion",
+            "dependencies": [
+              1
+            ],
+            "details": "Build responsive navigation with hamburger menu for mobile, implement smooth scrolling to page sections, create high-contrast CTA buttons, add hover/active states for interactive elements, ensure proper button sizing on all devices, and implement email signup form with validation",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Optimize page for SEO",
+            "description": "Implement technical SEO elements and ensure content is optimized for search engines",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Add proper meta tags (title, description, viewport), implement schema markup for rich snippets, optimize image alt tags, ensure proper heading hierarchy (H1-H6), create XML sitemap, implement canonical URLs, and ensure content includes relevant keywords naturally",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Conduct performance optimization",
+            "description": "Optimize page load speed and overall performance across devices",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Compress and optimize images, implement lazy loading for below-fold content, minify CSS/JS files, leverage browser caching, reduce render-blocking resources, test page speed using Lighthouse/PageSpeed Insights, and ensure Core Web Vitals metrics meet standards",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 21,
+        "title": "Implement Error Tracking with Sentry",
+        "description": "Integrate Sentry for error tracking and monitoring in both frontend and backend.",
+        "details": "1. Create a Sentry account and project\n2. Install Sentry SDK in the Next.js frontend\n3. Install Sentry SDK in the FastAPI backend\n4. Configure source map uploading during CI/CD\n5. Add user context to error reports\n6. Set up performance monitoring for key transactions\n7. Configure alerting rules for critical errors\n8. Implement Slack/email notifications for error alerts\n9. Add a global error boundary in the React application",
+        "testStrategy": "Test error reporting by triggering various error conditions. Verify user context is correctly attached to error reports. Test performance monitoring for key transactions. Verify alerting rules trigger notifications correctly.",
+        "priority": "medium",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Sentry Account Setup and SDK Installation",
+            "description": "Create a Sentry account and install the required SDKs for both frontend and backend environments",
+            "dependencies": [],
+            "details": "Create a team Sentry account, set up a new project, obtain DSN keys, and install Sentry SDKs in package.json for frontend and requirements.txt for backend",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Frontend Error Tracking Configuration",
+            "description": "Implement Sentry error tracking in the React frontend application",
+            "dependencies": [
+              1
+            ],
+            "details": "Initialize Sentry in the frontend code, configure environment variables, set up context information (user data, app state), implement error boundaries, and add custom error tracking for critical user flows",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Backend Error Tracking Configuration",
+            "description": "Implement Sentry error tracking in the Django backend application",
+            "dependencies": [
+              1
+            ],
+            "details": "Initialize Sentry in Django settings, configure middleware for request data capture, set up user context, implement performance monitoring, and ensure proper exception handling throughout the codebase",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Custom Event and Breadcrumb Implementation",
+            "description": "Add custom events and breadcrumbs to provide better context for errors",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Implement custom event tracking for important user actions, add breadcrumbs for tracking user journey, and ensure proper tagging of events for easier filtering and analysis",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Alerting and Notification Setup",
+            "description": "Configure alert rules and notification channels in Sentry",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Set up issue alerts based on frequency and severity, configure notification channels (email, Slack), create team assignments for different error types, and implement alert policies for production vs development environments",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Testing and Verification",
+            "description": "Test the Sentry integration in both environments and verify proper error reporting",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Create test errors in both frontend and backend, verify proper capture and context information, test alert notifications, and ensure performance impact is minimal",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 22,
+        "title": "Implement Database Backup and Recovery System",
+        "description": "Set up automated database backup and recovery procedures for data protection.",
+        "details": "1. Configure daily automated backups for the Supabase database\n2. Enable Point-in-Time Recovery (PITR) for at least 7 days\n3. Document the recovery process step-by-step\n4. Test the recovery process at least once\n5. Set up monitoring and alerts for backup failures\n6. Create a backup retention policy\n7. Implement a script for manual backup initiation\n8. Document disaster recovery procedures",
+        "testStrategy": "Test the backup process by verifying backup files are created correctly. Test the recovery process by restoring a database from backup. Verify PITR works by recovering to a specific point in time. Test alert notifications for backup failures.",
+        "priority": "medium",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Automated Backup Configuration",
+            "description": "Set up automated database backups with appropriate scheduling and retention policies",
+            "dependencies": [],
+            "details": "Configure automated backups to run daily during off-peak hours. Implement appropriate retention policies (daily backups for 7 days, weekly backups for 1 month, monthly backups for 1 year). Test the backup process to ensure it completes successfully without impacting system performance.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Point-in-Time Recovery Setup",
+            "description": "Implement point-in-time recovery capability for the database system",
+            "dependencies": [
+              1
+            ],
+            "details": "Configure transaction log backups to enable point-in-time recovery. Set up appropriate storage for transaction logs with sufficient capacity. Document the recovery window based on storage constraints. Test the point-in-time recovery process to verify functionality.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Manual Backup Script Implementation",
+            "description": "Develop scripts for manual backup initiation and verification",
+            "dependencies": [
+              1
+            ],
+            "details": "Create shell/PowerShell scripts that can trigger manual backups when needed. Include verification steps in the scripts to confirm backup integrity. Add documentation within the scripts explaining usage parameters and expected outcomes. Test scripts in development environment before deployment.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Recovery Process Documentation",
+            "description": "Create comprehensive documentation for database recovery procedures",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Document step-by-step recovery procedures for different scenarios (complete restoration, point-in-time recovery, partial data recovery). Include prerequisites, estimated recovery times, and verification steps. Create a decision tree to help determine the appropriate recovery method based on the incident type.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Recovery Testing",
+            "description": "Conduct thorough testing of recovery procedures in isolated environments",
+            "dependencies": [
+              4
+            ],
+            "details": "Set up isolated test environments that mirror production. Execute recovery procedures following the documentation. Measure recovery times and success rates. Identify and address any gaps in the recovery process or documentation. Document test results and improvements made.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Monitoring and Alerting Implementation",
+            "description": "Set up monitoring and alerting for backup processes and status",
+            "dependencies": [
+              1,
+              3
+            ],
+            "details": "Implement monitoring for backup job status, backup size trends, and storage capacity. Configure alerts for backup failures, unusual backup sizes, or approaching storage limits. Create a dashboard for backup health visualization. Document alert response procedures for the operations team.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 23,
+        "title": "Implement CI/CD Pipeline with GitHub Actions",
+        "description": "Set up continuous integration and deployment workflows for automated testing and deployment.",
+        "details": "1. Create GitHub Actions workflow files for CI/CD\n2. Set up automated testing for frontend and backend\n3. Configure linting and code quality checks\n4. Implement build processes for frontend and backend\n5. Set up deployment to Vercel for the frontend\n6. Configure containerized deployment for the backend (Render, Fly.io, or AWS ECS)\n7. Implement database migration steps in the deployment process\n8. Add environment-specific configuration management\n9. Set up deployment notifications",
+        "testStrategy": "Test the CI/CD pipeline by making changes to the codebase and verifying that tests run, builds complete, and deployments succeed. Verify that database migrations are correctly applied during deployment. Test rollback procedures for failed deployments.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set up automated testing workflow",
+            "description": "Configure CI pipeline to run unit, integration, and end-to-end tests automatically on code changes",
+            "dependencies": [],
+            "details": "Implement GitHub Actions workflow that triggers on pull requests and pushes to main branches. Configure test runners for both frontend and backend tests. Set up test reporting and notifications for failed tests. Ensure proper caching of dependencies to speed up test runs.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement linting and code quality checks",
+            "description": "Add automated code quality verification using linters, formatters, and static analysis tools",
+            "dependencies": [
+              1
+            ],
+            "details": "Configure ESLint, Prettier, and TypeScript checking for frontend code. Set up backend code analysis with appropriate tools. Implement pre-commit hooks using Husky. Configure SonarQube or similar tool for deeper code quality analysis. Ensure CI pipeline fails on code quality issues.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Configure frontend build and deployment pipeline",
+            "description": "Automate the process of building, testing, and deploying frontend applications to staging and production environments",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Set up build process for frontend assets with proper optimization. Configure deployment to CDN or static hosting service. Implement versioning strategy for frontend releases. Add smoke tests after deployment. Configure rollback mechanisms for failed deployments.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement backend build and deployment automation",
+            "description": "Create CI/CD pipeline for building, testing, and deploying backend services to various environments",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Configure containerization of backend services using Docker. Set up deployment to Kubernetes or other container orchestration platform. Implement blue-green or canary deployment strategies. Configure health checks and automated rollbacks. Set up API contract testing to ensure compatibility.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Integrate database migration process",
+            "description": "Automate database schema changes and migrations as part of the deployment pipeline",
+            "dependencies": [
+              4
+            ],
+            "details": "Set up migration tools like Flyway or Liquibase. Configure migration verification in staging environment before production. Implement backup procedures before migrations. Create rollback scripts for failed migrations. Add monitoring for migration performance and impact.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Establish environment configuration management",
+            "description": "Implement secure and consistent management of environment-specific configurations across all deployment targets",
+            "dependencies": [
+              3,
+              4,
+              5
+            ],
+            "details": "Set up secrets management using tools like HashiCorp Vault or AWS Secrets Manager. Implement configuration templating for different environments. Create validation checks for configuration completeness. Establish audit logging for configuration changes. Configure environment promotion workflow from development to production.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 24,
+        "title": "Implement API Documentation with OpenAPI/Swagger",
+        "description": "Set up automatic API documentation generation using FastAPI's built-in OpenAPI support.",
+        "details": "1. Configure FastAPI to generate OpenAPI documentation\n2. Add detailed docstrings to all API endpoints\n3. Include request/response examples in the documentation\n4. Set up Swagger UI for interactive API testing\n5. Configure ReDoc for a more user-friendly documentation view\n6. Add authentication documentation\n7. Group endpoints logically by tags\n8. Include error response documentation",
+        "testStrategy": "Verify that Swagger UI and ReDoc are correctly generated and accessible. Test the interactive API testing functionality in Swagger UI. Verify that all endpoints are properly documented with examples and error responses.",
+        "priority": "low",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Configure FastAPI OpenAPI settings",
+            "description": "Set up the basic OpenAPI configuration for the FastAPI application",
+            "dependencies": [],
+            "details": "Configure the FastAPI application with proper metadata including title, description, version, and contact information. Set appropriate OpenAPI URL and documentation URLs. Ensure proper tags are defined for API categorization.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Document API endpoints with detailed descriptions",
+            "description": "Add comprehensive documentation to all API endpoints",
+            "dependencies": [
+              1
+            ],
+            "details": "For each endpoint, add detailed descriptions explaining purpose, functionality, and usage. Include proper parameter descriptions with type information. Document expected responses and status codes.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Implement request and response examples",
+            "description": "Add practical examples for requests and responses for all endpoints",
+            "dependencies": [
+              2
+            ],
+            "details": "Create realistic example values for request bodies and parameters. Document example responses for successful operations and common error scenarios. Use FastAPI's example functionality to show multiple usage scenarios where appropriate.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Configure and customize Swagger UI",
+            "description": "Set up and customize the Swagger UI interface for interactive API documentation",
+            "dependencies": [
+              1
+            ],
+            "details": "Configure Swagger UI with appropriate theme and layout. Customize the interface with project branding if needed. Ensure all endpoints are properly categorized and displayed. Test interactive features like the 'Try it out' functionality.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Set up ReDoc alternative documentation",
+            "description": "Configure the ReDoc interface as an alternative documentation view",
+            "dependencies": [
+              1
+            ],
+            "details": "Set up ReDoc documentation path and configuration. Ensure all API information is properly displayed in the ReDoc interface. Customize ReDoc appearance if needed to match project requirements.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Test and validate API documentation",
+            "description": "Thoroughly test all aspects of the API documentation",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Verify all endpoints are properly documented. Test examples to ensure they are valid and work as expected. Check both Swagger UI and ReDoc interfaces for completeness and accuracy. Validate that all parameters, request bodies, and responses are correctly documented.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 25,
+        "title": "Implement Frontend State Management",
+        "description": "Set up a state management solution using React Context or Zustand for the frontend application.",
+        "details": "1. Evaluate and choose between React Context and Zustand based on application needs\n2. Implement a user context for storing authentication state\n3. Create a campaigns context/store for managing campaign data\n4. Implement a UI state store for managing modals, notifications, etc.\n5. Set up proper state persistence where needed\n6. Create custom hooks for accessing state\n7. Implement optimistic updates for better UX\n8. Add error handling and loading states",
+        "testStrategy": "Test state management with various user interactions. Verify that state is correctly updated and persisted where needed. Test optimistic updates and error recovery. Verify that components correctly access and update state.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "State Management Library Selection and Setup",
+            "description": "Research, select, and implement a state management library that best fits the project requirements.",
+            "dependencies": [],
+            "details": "Compare Redux, MobX, Zustand, Recoil, and Context API based on performance, complexity, and team familiarity. Document the decision process. Set up the chosen library with proper folder structure and integration with React. Create basic store configuration and provider setup.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Authentication State Management",
+            "description": "Implement state management for user authentication flows and user data.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create authentication store/slice with actions for login, logout, registration, and token refresh. Implement persistence for auth tokens. Handle authentication status checks and protected routes. Store and manage user profile data and permissions.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Campaign Data State Management",
+            "description": "Develop state management for campaign-related data including CRUD operations.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create campaign store/slice with actions for fetching, creating, updating, and deleting campaigns. Implement data normalization for efficient access. Set up selectors for derived campaign data. Handle pagination, filtering, and sorting state for campaign lists.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "UI State Management",
+            "description": "Implement state management for UI-specific states across the application.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create UI store/slice for managing modal states, sidebar visibility, theme preferences, and notifications. Implement form state management strategy. Handle loading states and progress indicators. Manage global and component-specific UI states.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Optimistic Updates Implementation",
+            "description": "Implement optimistic updates for better user experience during data modifications.",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Create a system for optimistically updating the UI before server confirmation. Implement rollback mechanisms for failed operations. Handle concurrent edits and conflicts. Test optimistic updates with simulated network delays.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Error Handling and State Recovery",
+            "description": "Develop robust error handling strategies within the state management system.",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Implement global error state management. Create error boundaries for state-related crashes. Develop retry mechanisms for failed API calls. Implement state recovery after errors. Create user-friendly error messages and notifications tied to state failures.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 26,
+        "title": "Implement Responsive UI with Tailwind and shadcn/ui",
+        "description": "Set up the UI framework using Tailwind CSS and shadcn/ui components for a consistent, responsive design across all application pages.",
+        "status": "pending",
+        "dependencies": [
+          1
+        ],
+        "priority": "high",
+        "details": "1. Install and configure Tailwind CSS in the Next.js project\n2. Set up shadcn/ui component library\n3. Create a consistent color scheme and typography system\n4. Implement responsive layouts for all pages (Landing, Dashboard, Campaign Management, Campaign Detail, Creation/Editing Modals, User/Domain Management)\n5. Create reusable UI components (buttons, forms, cards, etc.)\n6. Implement dark/light mode support\n7. Create a component documentation/showcase page\n8. Ensure accessibility compliance (WCAG 2.1 AA)",
+        "testStrategy": "Test UI components on various screen sizes and devices. Verify that responsive layouts work correctly for each page (Landing, Dashboard, Campaign views, etc.). Test accessibility using automated tools and manual testing. Verify that dark/light mode switching works correctly across all page components.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Tailwind and shadcn/ui Setup",
+            "description": "Install and configure Tailwind CSS and shadcn/ui as the foundation for the UI framework",
+            "dependencies": [],
+            "details": "Install necessary packages (tailwindcss, postcss, autoprefixer, shadcn/ui). Configure tailwind.config.js with appropriate content paths. Set up the base CSS file with @tailwind directives. Initialize shadcn/ui with the CLI tool. Configure the components.json file for shadcn/ui theming.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Color Scheme and Typography System",
+            "description": "Define a comprehensive color palette and typography system that will be used throughout the application",
+            "dependencies": [
+              1
+            ],
+            "details": "Create a color palette with primary, secondary, accent, and neutral colors. Define semantic color variables for UI elements (background, text, borders, etc.). Set up typography scales for headings, body text, and UI elements. Configure font families, weights, and line heights in the tailwind config. Document the color and typography system for team reference.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Responsive Layout Components",
+            "description": "Develop a set of layout components that ensure consistent responsive behavior across the application",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Create Container, Grid, and Flex components with responsive variants. Implement a responsive spacing system. Develop a breakpoint system for different device sizes. Create layout utilities for common patterns (split screens, card layouts, etc.). Test layouts across various screen sizes and devices.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Reusable UI Component Library",
+            "description": "Build a comprehensive library of UI components that follow the established design system",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Develop form components (inputs, selects, checkboxes, etc.). Create navigation components (navbar, sidebar, breadcrumbs). Implement feedback components (alerts, toasts, modals). Build data display components (tables, cards, lists). Add interactive components (dropdowns, accordions, tabs). Ensure all components are accessible and keyboard navigable.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Dark/Light Mode Implementation",
+            "description": "Implement a theme switching system that supports both dark and light modes",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "Set up a theme context provider for managing theme state. Create dark and light color variants in the Tailwind config. Implement theme toggle component. Add system preference detection. Ensure all components respond appropriately to theme changes. Store user theme preference in local storage.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Documentation and Component Showcase",
+            "description": "Create comprehensive documentation and a component showcase for the UI framework",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "Set up a documentation site or page within the application. Document usage examples for all components. Create a component showcase with interactive examples. Document theming and customization options. Include accessibility guidelines and best practices. Provide implementation examples for common UI patterns.",
+            "status": "pending"
+          },
+          {
+            "id": 7,
+            "title": "Landing Page UI Components",
+            "description": "Implement UI components specific to the Landing Page design",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Create hero section with compelling value proposition. Implement feature showcase components. Design testimonial/social proof sections. Build pricing tier components if applicable. Develop call-to-action sections. Ensure responsive behavior for all landing page elements. Implement animated transitions where appropriate.",
+            "status": "pending"
+          },
+          {
+            "id": 8,
+            "title": "Dashboard UI Components",
+            "description": "Implement UI components specific to the Dashboard design",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Create dashboard layout with appropriate grid system. Implement metric/KPI card components. Design data visualization components (charts, graphs). Build campaign summary cards. Create activity feed components. Implement quick action buttons and navigation elements. Ensure all dashboard components are responsive.",
+            "status": "pending"
+          },
+          {
+            "id": 9,
+            "title": "Campaign Management View Components",
+            "description": "Implement UI components for the Campaign Management view",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Create campaign list/table component with sorting and filtering. Implement campaign status indicators. Design campaign type filters. Build campaign search functionality. Create campaign action buttons (edit, delete, duplicate). Implement pagination components. Ensure responsive behavior for all screen sizes.",
+            "status": "pending"
+          },
+          {
+            "id": 10,
+            "title": "Campaign Detail View Components",
+            "description": "Implement UI components for the Campaign Detail view",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Create campaign header with key information. Implement campaign metrics dashboard. Design campaign timeline/history components. Build email template preview components. Create recipient list display. Implement campaign status workflow indicators. Design A/B testing result displays if applicable. Ensure all components are responsive.",
+            "status": "pending"
+          },
+          {
+            "id": 11,
+            "title": "Creation/Editing Modal Components",
+            "description": "Implement UI components for Campaign Creation and Editing modals",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Create multi-step form layout for campaign creation. Implement form validation indicators. Design template selection components. Build recipient targeting interface. Create scheduling components with date/time pickers. Implement preview functionality. Design confirmation screens. Ensure modal components are responsive and accessible.",
+            "status": "pending"
+          },
+          {
+            "id": 12,
+            "title": "User/Domain Management Settings Components",
+            "description": "Implement UI components for User and Domain Management settings",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Create user management table/list components. Implement role selection interfaces. Design domain verification components. Build API key management interface. Create notification preference settings. Implement account information forms. Design billing/subscription components if applicable. Ensure all settings components are responsive and accessible.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 27,
+        "title": "Implement User Profile Management",
+        "description": "Create functionality for users to view and edit their profile information.",
+        "details": "1. Implement the `/api/v1/users/me` GET endpoint\n2. Create a user profile page component\n3. Display user information (email, role, organization)\n4. Add functionality to update profile information where applicable\n5. Implement password change functionality (if using email/password auth)\n6. Add account deletion option\n7. Create UI for managing connected accounts (Google OAuth)\n8. Implement profile picture upload/management",
+        "testStrategy": "Test profile viewing and editing with various user types. Verify that password changes work correctly. Test account deletion and connected account management. Verify that profile pictures can be uploaded and displayed correctly.",
+        "priority": "low",
+        "dependencies": [
+          4,
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Profile Data API Endpoints",
+            "description": "Develop RESTful API endpoints for retrieving and updating user profile data",
+            "dependencies": [],
+            "details": "Implement GET /api/profile to retrieve user data, PUT /api/profile to update profile information, and ensure proper authentication middleware. Include validation for required fields and data types. Document API endpoints with Swagger or similar tool.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement Profile Page Component",
+            "description": "Create a user profile page component to display user information",
+            "dependencies": [
+              1
+            ],
+            "details": "Design and implement a responsive profile page component that displays user information retrieved from the API. Include sections for personal details, preferences, and account information. Ensure accessibility compliance and responsive design for mobile and desktop views.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Develop Profile Editing Functionality",
+            "description": "Add the ability for users to edit their profile information",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Create edit forms for user profile data with client-side validation. Implement save/cancel functionality and provide feedback on successful updates or validation errors. Include the ability to upload and crop profile pictures.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Create Password Management Feature",
+            "description": "Implement functionality for users to change their password",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop a password change form with current password verification, new password requirements validation, and confirmation. Create the corresponding API endpoint for password updates with proper security measures. Include password strength indicators and helpful error messages.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Implement Account Deletion Functionality",
+            "description": "Add the ability for users to delete their account",
+            "dependencies": [
+              1
+            ],
+            "details": "Create account deletion workflow with confirmation steps and security verification. Implement soft delete functionality in the backend and provide clear warnings about data loss. Include an option for users to download their data before deletion to comply with data privacy regulations.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Add Account Settings Management",
+            "description": "Implement additional account settings like notifications, privacy options, and linked accounts",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Create a settings panel for managing notification preferences, privacy options, and third-party account connections. Implement toggles for email notifications, visibility settings, and options to connect/disconnect social accounts. Ensure settings are saved in real-time and provide user feedback on changes.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 28,
+        "title": "Implement Organization Settings Management",
+        "description": "Create functionality for Managers to view and edit organization settings.",
+        "details": "1. Implement the `/api/v1/organization` GET and PUT endpoints\n2. Create an organization settings page component\n3. Display organization information (name, domain, subscription status)\n4. Add functionality to update organization name\n5. Implement subscription management UI\n6. Create a section for billing history\n7. Add organization deletion option (with appropriate safeguards)\n8. Implement organization branding options (logo, colors)",
+        "testStrategy": "Test organization settings viewing and editing as both Manager and Team Member roles. Verify that only Managers can edit organization settings. Test subscription management and billing history display. Verify that organization deletion works correctly with proper validation.",
+        "priority": "medium",
+        "dependencies": [
+          5,
+          6
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Organization Data API Endpoints",
+            "description": "Create RESTful API endpoints for retrieving and managing organization data",
+            "dependencies": [],
+            "details": "Develop endpoints for: GET /api/organizations/:id, PUT /api/organizations/:id, with proper permission middleware. Include fields for organization name, contact info, billing address, and creation date. Implement proper error handling and validation.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Create Organization Settings Page Component",
+            "description": "Build a React component for displaying organization settings with proper layout and styling",
+            "dependencies": [
+              1
+            ],
+            "details": "Design a responsive settings page with sections for general info, subscription details, team members, and danger zone. Include breadcrumb navigation and implement form components for each editable field. Use the organization data API endpoints for data retrieval.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Implement Organization Editing Functionality",
+            "description": "Add the ability to edit organization details with proper validation and permission checks",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Create form handlers for updating organization name, contact information, and other editable fields. Implement client-side validation before submission. Add success/error notifications and optimistic UI updates. Ensure only users with admin permissions can edit organization details.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Develop Subscription Management UI",
+            "description": "Create interface for viewing and managing organization subscription details",
+            "dependencies": [
+              2
+            ],
+            "details": "Build components for displaying current subscription plan, billing cycle, payment methods, and invoice history. Implement upgrade/downgrade plan functionality with confirmation modals. Add integration with payment processor API. Include subscription status indicators and renewal information.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Implement Organization Deletion Workflow",
+            "description": "Create a secure process for organization deletion with proper safeguards",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Develop a multi-step confirmation process requiring organization name verification. Create API endpoint for deletion with proper authentication checks. Implement cascading deletion of related data. Add warnings about data loss and subscription cancellation. Include a cooldown period with cancellation option.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Add Comprehensive Permission Checks",
+            "description": "Implement permission validation across all organization management features",
+            "dependencies": [
+              1,
+              3,
+              4,
+              5
+            ],
+            "details": "Create middleware for checking user permissions on all organization-related API endpoints. Implement UI-level permission checks to hide/disable features based on user role. Add audit logging for sensitive operations. Test different user roles to ensure proper access control.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 29,
+        "title": "Implement Security Measures and Vulnerability Protection",
+        "description": "Implement security best practices to protect against common web vulnerabilities.",
+        "details": "1. Implement HTTPS for all connections\n2. Set up proper CORS configuration\n3. Add CSRF protection for relevant endpoints\n4. Implement input validation on all API endpoints using Pydantic\n5. Set up rate limiting for authentication and API endpoints\n6. Configure security headers (Content-Security-Policy, X-XSS-Protection, etc.)\n7. Implement proper error handling to avoid leaking sensitive information\n8. Set up regular security scanning in the CI/CD pipeline",
+        "testStrategy": "Test security measures by attempting various attack vectors (XSS, CSRF, injection, etc.). Verify that rate limiting works correctly. Test CORS configuration with various origins. Verify that security headers are correctly set on all responses.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "HTTPS and CORS Configuration",
+            "description": "Set up HTTPS with proper certificates and configure CORS policies to restrict cross-origin requests.",
+            "dependencies": [],
+            "details": "1. Generate/obtain SSL certificates for HTTPS\n2. Configure Nginx or other web server for HTTPS\n3. Implement CORS middleware in FastAPI\n4. Define allowed origins, methods, and headers\n5. Test CORS restrictions with cross-origin requests\n6. Document the CORS policy",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "CSRF Protection Implementation",
+            "description": "Implement Cross-Site Request Forgery protection mechanisms for all state-changing operations.",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Add CSRF token generation to authentication flow\n2. Create middleware to validate CSRF tokens\n3. Modify frontend to include CSRF tokens in requests\n4. Implement double-submit cookie pattern\n5. Test CSRF protection with simulated attacks\n6. Document CSRF protection approach",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Input Validation with Pydantic",
+            "description": "Implement comprehensive input validation using Pydantic models for all API endpoints.",
+            "dependencies": [],
+            "details": "1. Create Pydantic models for all request payloads\n2. Add field-level validators for complex validation rules\n3. Implement custom validators for business logic constraints\n4. Ensure proper error messages for validation failures\n5. Test validation with boundary and malicious inputs\n6. Document validation models and rules",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Rate Limiting Implementation",
+            "description": "Implement rate limiting to prevent abuse and DoS attacks on API endpoints.",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Research rate limiting libraries compatible with FastAPI\n2. Implement IP-based rate limiting for public endpoints\n3. Add user-based rate limiting for authenticated endpoints\n4. Configure different limits for various endpoint types\n5. Implement proper rate limit headers in responses\n6. Test rate limiting with load testing tools",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Security Headers Configuration",
+            "description": "Configure security headers to protect against common web vulnerabilities.",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Implement Content-Security-Policy headers\n2. Configure X-Content-Type-Options header\n3. Set up X-Frame-Options to prevent clickjacking\n4. Add Strict-Transport-Security header for HTTPS\n5. Configure Referrer-Policy header\n6. Test headers using security scanning tools",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Error Handling and Security Scanning",
+            "description": "Implement secure error handling and perform security scanning of the application.",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "1. Create custom error handlers to prevent information leakage\n2. Implement proper logging of security events\n3. Set up automated security scanning with OWASP ZAP\n4. Perform dependency scanning for vulnerabilities\n5. Create a security incident response plan\n6. Document security practices and findings",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 30,
+        "title": "Implement Performance Optimization and Monitoring",
+        "description": "Optimize application performance and set up monitoring to ensure performance targets are met.",
+        "details": "1. Implement server-side rendering (SSR) for critical pages\n2. Set up code splitting and lazy loading for frontend components\n3. Optimize database queries with proper indexing\n4. Implement caching strategies for frequently accessed data\n5. Set up performance monitoring for API response times\n6. Configure frontend performance monitoring (LCP, FID, CLS)\n7. Implement database query logging and optimization\n8. Set up alerting for performance degradation\n9. Create a performance testing suite",
+        "testStrategy": "Measure application performance using tools like Lighthouse and WebPageTest. Verify that API response times meet the target of <300ms for 95% of requests. Test performance with various load levels. Verify that performance monitoring correctly identifies and reports issues.",
+        "priority": "medium",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Server-Side Rendering",
+            "description": "Set up server-side rendering to improve initial page load times and SEO performance",
+            "dependencies": [],
+            "details": "Implement SSR using Next.js or similar framework, configure hydration process, ensure proper data fetching on the server, and optimize the critical rendering path. Document the implementation approach and performance gains.",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Implement Code Splitting and Lazy Loading",
+            "description": "Break down application code into smaller chunks that load on demand",
+            "dependencies": [
+              1
+            ],
+            "details": "Identify components for lazy loading, implement dynamic imports, set up route-based code splitting, optimize bundle sizes, and configure prefetching strategies for anticipated user paths.",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Optimize Database Queries",
+            "description": "Analyze and improve database query performance to reduce response times",
+            "dependencies": [],
+            "details": "Profile existing queries, add appropriate indexes, optimize JOIN operations, implement query caching where appropriate, and refactor problematic queries. Document performance improvements with metrics.",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Implement Caching Strategy",
+            "description": "Design and implement a comprehensive caching system across the application",
+            "dependencies": [
+              3
+            ],
+            "details": "Implement browser caching with appropriate headers, set up CDN for static assets, implement Redis or similar for server-side caching, and create a cache invalidation strategy. Document cache hit rates and performance improvements.",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Set Up Performance Monitoring",
+            "description": "Implement tools and systems to continuously monitor application performance",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Set up real user monitoring (RUM), configure server performance metrics collection, implement error tracking, create performance dashboards, and set up alerting for performance degradations.",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Create Performance Testing Suite",
+            "description": "Develop automated tests to measure and validate performance improvements",
+            "dependencies": [
+              5
+            ],
+            "details": "Implement load testing scripts, create performance regression tests, set up CI/CD integration for performance testing, establish performance budgets, and document baseline metrics for future comparison.",
+            "status": "pending"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-06-16T08:11:19.709Z",
+      "updated": "2025-06-16T08:45:03.253Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+# Task ID: 14
+# Title: Implement UTM Link Generation Form
+# Status: pending
+# Dependencies: 11
+# Priority: high
+# Description: Create a form for generating UTM-tagged links associated with a campaign.
+# Details:
+1. Create a form component for UTM link generation
+2. Pre-fill the `utm_campaign` field from the parent campaign
+3. Implement a dropdown for `utm_source` with the list of 100 marketing vendors
+4. Add fields for destination URL, `utm_medium`, `utm_content`, and `utm_term`
+5. Implement form validation for required fields
+6. Generate the full UTM-tagged URL with proper encoding
+7. Implement the `/api/v1/campaigns/{campaign_id}/links` POST endpoint
+8. Store the generated link in the database associated with the campaign
+9. Add a "Copy to Clipboard" button for the generated link
+
+# Test Strategy:
+Test link generation with various input combinations. Verify UTM parameters are correctly encoded in the URL. Test that links are correctly associated with campaigns in the database. Verify the copy to clipboard functionality works correctly.
+
+# Subtasks:
+## 1. Create UTM form component structure [pending]
+### Dependencies: None
+### Description: Build the basic form component with all required UTM fields (source, medium, campaign, term, content) and URL input
+### Details:
+Create a React component with form fields for all UTM parameters. Include validation for required fields. Style the form according to design guidelines. Add proper labels and placeholder text for each field.
+
+## 2. Implement source dropdown with vendor list [pending]
+### Dependencies: 14.1
+### Description: Create a dropdown component for the UTM source field that includes a predefined list of vendors
+### Details:
+Fetch vendor list from API or use a predefined array. Implement the dropdown with search functionality. Allow custom entries in addition to predefined options. Ensure proper state management for the selected value.
+
+## 3. Develop URL generation with proper encoding [pending]
+### Dependencies: 14.1
+### Description: Create utility functions to generate properly encoded UTM URLs based on form inputs
+### Details:
+Implement functions to validate the base URL. Create logic to append UTM parameters with proper encoding. Handle edge cases like existing query parameters in the base URL. Add validation to ensure generated URLs are properly formatted.
+
+## 4. Build link creation API endpoint [pending]
+### Dependencies: 14.3
+### Description: Create a backend API endpoint to save generated UTM links to the database
+### Details:
+Design database schema for storing UTM links. Implement API endpoint for creating new UTM links. Add validation for incoming data. Include error handling and appropriate HTTP status codes. Document the API for frontend integration.
+
+## 5. Implement copy to clipboard functionality [pending]
+### Dependencies: 14.3
+### Description: Add a button to copy the generated UTM link to the clipboard
+### Details:
+Research and implement a cross-browser compatible clipboard API. Add visual feedback when copy is successful. Handle clipboard permissions and fallbacks for browsers that don't support the Clipboard API. Test on multiple browsers.
+
+## 6. Add pre-filled fields functionality [pending]
+### Dependencies: 14.1, 14.4
+### Description: Implement logic to pre-fill form fields based on previous entries or templates
+### Details:
+Create a mechanism to store and retrieve common UTM patterns. Implement template selection functionality. Add logic to pre-fill form fields based on selected template or previous entries. Include ability to save new templates.
+

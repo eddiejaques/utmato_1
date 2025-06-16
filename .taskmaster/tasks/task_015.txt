@@ -1,0 +1,57 @@
+# Task ID: 15
+# Title: Implement UTM Link Management
+# Status: pending
+# Dependencies: 14
+# Priority: medium
+# Description: Create functionality for viewing, editing, and deleting UTM links.
+# Details:
+1. Display UTM links in a table within the campaign detail view
+2. Implement the `/api/v1/links/{link_id}` PUT endpoint for updating links
+3. Create an edit form pre-populated with existing link data
+4. Implement the `/api/v1/links/{link_id}` DELETE endpoint
+5. Add edit and delete buttons for each link
+6. Implement confirmation dialogs before deletion
+7. Add bulk selection and operation capabilities
+8. Implement filtering and sorting for the links table
+9. Add a "Copy to Clipboard" button for each link
+
+# Test Strategy:
+Test editing and deleting links with various scenarios. Verify bulk operations work correctly. Test filtering and sorting of the links table. Verify permission checks prevent unauthorized operations.
+
+# Subtasks:
+## 1. Create Links Table Component [pending]
+### Dependencies: None
+### Description: Develop a table component to display UTM links with columns for key attributes
+### Details:
+Build a responsive table component that displays UTM links with columns for link name, destination URL, UTM parameters, creation date, and click count. Include row selection capability for bulk operations. Implement pagination for handling large numbers of links.
+
+## 2. Implement Link Update API Endpoint [pending]
+### Dependencies: None
+### Description: Create backend API endpoint for updating existing UTM links
+### Details:
+Develop a RESTful API endpoint that handles PUT/PATCH requests to update UTM link properties. Include validation for required fields and proper error handling. Ensure the endpoint returns appropriate status codes and response messages.
+
+## 3. Build Link Update Form [pending]
+### Dependencies: 15.1, 15.2
+### Description: Create a form interface for editing UTM link properties
+### Details:
+Design and implement a form component that allows users to edit UTM link properties including name, destination URL, and UTM parameters. Include validation for required fields and proper error handling. Connect the form to the update API endpoint.
+
+## 4. Implement Link Deletion Functionality [pending]
+### Dependencies: 15.1
+### Description: Add capability to delete individual and multiple UTM links
+### Details:
+Create API endpoint for link deletion. Implement confirmation dialog before deletion. Add delete buttons to table rows for individual deletion. Connect bulk deletion to the row selection functionality in the links table.
+
+## 5. Develop Bulk Operations [pending]
+### Dependencies: 15.1, 15.4
+### Description: Implement functionality for performing actions on multiple selected links
+### Details:
+Create UI controls for bulk operations including delete, tag, and category assignment. Implement the backend logic to process bulk operations efficiently. Add progress indicators for operations that might take time to complete.
+
+## 6. Add Filtering and Sorting Capabilities [pending]
+### Dependencies: 15.1
+### Description: Implement filtering and sorting functionality for the links table
+### Details:
+Add filter controls for searching by name, URL, tags, and date ranges. Implement column sorting for all relevant columns. Create the backend query logic to support filtering and sorting operations. Ensure the UI updates to reflect the current filter and sort state.
+

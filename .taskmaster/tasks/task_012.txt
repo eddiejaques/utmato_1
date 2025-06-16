@@ -1,0 +1,56 @@
+# Task ID: 12
+# Title: Implement Campaign Editing Functionality
+# Status: pending
+# Dependencies: 9, 11
+# Priority: medium
+# Description: Create functionality for users to edit existing campaign metadata.
+# Details:
+1. Create an edit form component pre-populated with existing campaign data
+2. Implement the `/api/v1/campaigns/{campaign_id}` PUT endpoint
+3. Add validation to ensure only the creator or a Manager can edit a campaign
+4. Implement form validation for all editable fields
+5. Update the campaign record in the database
+6. Add an audit trail for tracking significant changes
+7. Implement success/error notifications
+8. Refresh the campaign detail view after successful updates
+
+# Test Strategy:
+Test editing campaigns with valid and invalid inputs. Verify permission checks prevent unauthorized edits. Test that all fields can be correctly updated. Verify audit trail records changes correctly.
+
+# Subtasks:
+## 1. Create Campaign Edit Form Component [pending]
+### Dependencies: None
+### Description: Develop a form component that pre-populates with existing campaign data
+### Details:
+Build a React form component that accepts the current campaign data as props and displays all editable fields. Include form validation for required fields and data types. Ensure the component handles all campaign properties correctly and maintains the original values until explicitly changed.
+
+## 2. Implement Campaign Update API Endpoint [pending]
+### Dependencies: None
+### Description: Create a backend endpoint to handle campaign updates with proper permission validation
+### Details:
+Develop a PUT or PATCH endpoint at '/api/campaigns/:id' that accepts updated campaign data. Implement middleware to verify the user has permission to edit the campaign. Include validation of incoming data and handle partial updates appropriately.
+
+## 3. Connect Edit Form to API [pending]
+### Dependencies: 12.1, 12.2
+### Description: Wire up the edit form to submit changes to the update API endpoint
+### Details:
+Add submission handling to the edit form component that collects form data, transforms it to the required API format, and sends it to the update endpoint. Implement loading states during submission and error handling for failed requests.
+
+## 4. Implement Audit Trail Logging [pending]
+### Dependencies: 12.2
+### Description: Create a system to track and log all changes made to campaigns
+### Details:
+Extend the update endpoint to compare incoming data with existing data and log all changes to an audit table. Include user ID, timestamp, campaign ID, field name, old value, and new value in the audit records. Ensure this process is transactional with the update operation.
+
+## 5. Add Success Handling and View Refreshing [pending]
+### Dependencies: 12.3
+### Description: Implement UI feedback and data refreshing after successful updates
+### Details:
+Add success notifications to inform users when updates are complete. Implement logic to refresh the campaign view with updated data, either by refetching from the API or updating the local state. Consider optimistic updates for better UX.
+
+## 6. Create Edit History Display Component [pending]
+### Dependencies: 12.4, 12.5
+### Description: Develop a UI component to show the audit trail of campaign changes
+### Details:
+Build a component that fetches and displays the audit history for a campaign. Include filtering options by date range and change type. Format the display to clearly show what changed, when, and by whom. Consider pagination for campaigns with extensive edit histories.
+

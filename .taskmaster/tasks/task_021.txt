@@ -1,0 +1,57 @@
+# Task ID: 21
+# Title: Implement Error Tracking with Sentry
+# Status: pending
+# Dependencies: 1
+# Priority: medium
+# Description: Integrate Sentry for error tracking and monitoring in both frontend and backend.
+# Details:
+1. Create a Sentry account and project
+2. Install Sentry SDK in the Next.js frontend
+3. Install Sentry SDK in the FastAPI backend
+4. Configure source map uploading during CI/CD
+5. Add user context to error reports
+6. Set up performance monitoring for key transactions
+7. Configure alerting rules for critical errors
+8. Implement Slack/email notifications for error alerts
+9. Add a global error boundary in the React application
+
+# Test Strategy:
+Test error reporting by triggering various error conditions. Verify user context is correctly attached to error reports. Test performance monitoring for key transactions. Verify alerting rules trigger notifications correctly.
+
+# Subtasks:
+## 1. Sentry Account Setup and SDK Installation [pending]
+### Dependencies: None
+### Description: Create a Sentry account and install the required SDKs for both frontend and backend environments
+### Details:
+Create a team Sentry account, set up a new project, obtain DSN keys, and install Sentry SDKs in package.json for frontend and requirements.txt for backend
+
+## 2. Frontend Error Tracking Configuration [pending]
+### Dependencies: 21.1
+### Description: Implement Sentry error tracking in the React frontend application
+### Details:
+Initialize Sentry in the frontend code, configure environment variables, set up context information (user data, app state), implement error boundaries, and add custom error tracking for critical user flows
+
+## 3. Backend Error Tracking Configuration [pending]
+### Dependencies: 21.1
+### Description: Implement Sentry error tracking in the Django backend application
+### Details:
+Initialize Sentry in Django settings, configure middleware for request data capture, set up user context, implement performance monitoring, and ensure proper exception handling throughout the codebase
+
+## 4. Custom Event and Breadcrumb Implementation [pending]
+### Dependencies: 21.2, 21.3
+### Description: Add custom events and breadcrumbs to provide better context for errors
+### Details:
+Implement custom event tracking for important user actions, add breadcrumbs for tracking user journey, and ensure proper tagging of events for easier filtering and analysis
+
+## 5. Alerting and Notification Setup [pending]
+### Dependencies: 21.2, 21.3
+### Description: Configure alert rules and notification channels in Sentry
+### Details:
+Set up issue alerts based on frequency and severity, configure notification channels (email, Slack), create team assignments for different error types, and implement alert policies for production vs development environments
+
+## 6. Testing and Verification [pending]
+### Dependencies: 21.2, 21.3, 21.4, 21.5
+### Description: Test the Sentry integration in both environments and verify proper error reporting
+### Details:
+Create test errors in both frontend and backend, verify proper capture and context information, test alert notifications, and ensure performance impact is minimal
+

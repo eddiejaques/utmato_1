@@ -1,0 +1,81 @@
+# Task ID: 17
+# Title: Implement Subscription Management with Stripe
+# Status: pending
+# Dependencies: 5
+# Priority: high
+# Description: Integrate Stripe for subscription billing and management.
+# Details:
+1. Create a Stripe account and configure products/prices for monthly ($7.99) and annual ($5.99/month) plans
+2. Install Stripe SDK in the backend
+3. Implement the `/api/v1/billing/create-checkout-session` endpoint
+4. Create a billing page component in the frontend
+5. Implement the Stripe Checkout flow
+6. Set up webhook handling for subscription events (created, updated, canceled)
+7. Update organization subscription status based on webhook events
+8. Implement the `/api/v1/billing/portal` endpoint for redirecting to the Stripe billing portal
+9. Add subscription status indicators in the UI
+
+# Test Strategy:
+Test subscription creation for both monthly and annual plans. Verify webhook handling correctly updates subscription status. Test subscription cancellation and updates. Verify the billing portal redirect works correctly.
+
+# Subtasks:
+## 1. Stripe Account and Product Setup [pending]
+### Dependencies: None
+### Description: Create and configure Stripe account with appropriate products, pricing plans, and subscription options
+### Details:
+1. Create a Stripe account or use existing account
+2. Define products and pricing tiers in Stripe dashboard
+3. Configure subscription billing cycles and trial periods
+4. Set up webhook endpoints in Stripe dashboard
+5. Generate and securely store API keys for development and production environments
+
+## 2. Backend Stripe SDK Integration [pending]
+### Dependencies: 17.1
+### Description: Integrate Stripe SDK into the backend application and implement core payment functionality
+### Details:
+1. Install Stripe SDK in backend project
+2. Create configuration for API keys and environment settings
+3. Implement service layer for Stripe interactions
+4. Set up error handling and logging for Stripe operations
+5. Create unit tests for Stripe service functions
+
+## 3. Checkout Session API Endpoint [pending]
+### Dependencies: 17.2
+### Description: Create API endpoint to generate Stripe checkout sessions for subscription purchases
+### Details:
+1. Implement endpoint to create checkout sessions
+2. Add authentication and authorization checks
+3. Link checkout sessions to organization/user accounts
+4. Handle success and cancel URLs for checkout flow
+5. Add validation for subscription plan selection
+
+## 4. Frontend Billing Page Implementation [pending]
+### Dependencies: 17.3
+### Description: Create user interface for displaying subscription options and initiating checkout process
+### Details:
+1. Design billing page layout with pricing tiers
+2. Implement subscription plan selection UI
+3. Add checkout button that redirects to Stripe checkout
+4. Display current subscription status for existing subscribers
+5. Add loading states and error handling for API interactions
+
+## 5. Webhook Handling for Subscription Events [pending]
+### Dependencies: 17.2
+### Description: Implement webhook endpoint to process Stripe events for subscription lifecycle management
+### Details:
+1. Create webhook endpoint with signature verification
+2. Implement handlers for key events (payment_succeeded, payment_failed, subscription_created, etc.)
+3. Set up database transactions for subscription status updates
+4. Add logging for webhook events
+5. Create tests for webhook event processing
+
+## 6. Billing Portal and Subscription Management [pending]
+### Dependencies: 17.4, 17.5
+### Description: Implement customer portal for subscription management and integrate with organization status
+### Details:
+1. Create API endpoint to generate Stripe customer portal sessions
+2. Update organization model with subscription status fields
+3. Implement subscription status checks for feature access control
+4. Add UI for accessing customer portal
+5. Create admin view for subscription management
+

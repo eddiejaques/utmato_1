@@ -1,0 +1,55 @@
+# Task ID: 19
+# Title: Implement User Limit Enforcement
+# Status: pending
+# Dependencies: 7, 8
+# Priority: medium
+# Description: Create a system to enforce the 10-user limit per organization.
+# Details:
+1. Add a user count check before processing new invitations
+2. Implement a database query to get the current user count for an organization
+3. Create UI indicators showing current user count vs. maximum (10)
+4. Display appropriate error messages when attempting to exceed the limit
+5. Disable the invite button when the limit is reached
+6. Add user count validation in the invitation API endpoint
+7. Consider pending invitations in the user count calculation
+
+# Test Strategy:
+Test invitation creation at various user counts (9, 10, 11). Verify error messages are displayed when the limit is reached. Test the UI indicators for user count. Verify the API correctly rejects invitations that would exceed the limit.
+
+# Subtasks:
+## 1. Implement User Count Query [pending]
+### Dependencies: None
+### Description: Create a database query to accurately count active users in the system
+### Details:
+Develop an efficient query to count active users, ensuring it excludes deleted or deactivated accounts. This query will be used as the foundation for limit enforcement. Include caching mechanisms to avoid performance issues with frequent checks.
+
+## 2. Create User Limit Configuration [pending]
+### Dependencies: 19.1
+### Description: Implement a configuration system for user limits based on account tier
+### Details:
+Design a flexible configuration system that defines user limits based on account tiers. This should include default limits, the ability to override limits for specific accounts, and a mechanism to retrieve the current limit for any given account.
+
+## 3. Develop Invitation Validation Logic [pending]
+### Dependencies: 19.1, 19.2
+### Description: Create validation logic to check user limits before allowing new invitations
+### Details:
+Implement logic that validates whether a new user invitation would exceed the account's user limit. This should be integrated into the invitation creation flow and prevent invitations that would exceed the limit.
+
+## 4. Add UI Indicators for User Limits [pending]
+### Dependencies: 19.1, 19.2
+### Description: Implement UI elements showing current user count and limits
+### Details:
+Add visual indicators in the user management interface showing the current user count, the maximum allowed users, and how close the account is to reaching its limit. Consider using progress bars or other visual cues to make this information clear.
+
+## 5. Implement Error Messages for Limit Violations [pending]
+### Dependencies: 19.3, 19.4
+### Description: Create clear error messages when user limits would be exceeded
+### Details:
+Design and implement user-friendly error messages that appear when attempting to exceed user limits. These should explain the limitation clearly and potentially offer upgrade options if applicable.
+
+## 6. Add API Endpoint Validation [pending]
+### Dependencies: 19.1, 19.2, 19.3
+### Description: Implement user limit validation in all relevant API endpoints
+### Details:
+Add validation logic to all API endpoints that could potentially create or invite new users. This ensures that limits are enforced consistently across the application, including when accessed via API rather than the UI.
+

@@ -1,0 +1,56 @@
+# Task ID: 13
+# Title: Implement Campaign Deletion
+# Status: pending
+# Dependencies: 9, 11
+# Priority: low
+# Description: Create functionality for Managers to delete campaigns.
+# Details:
+1. Add a delete button to the campaign detail view (visible only to Managers)
+2. Implement a confirmation dialog before deletion
+3. Create the `/api/v1/campaigns/{campaign_id}` DELETE endpoint
+4. Validate that the user has Manager permissions
+5. Implement cascading deletion of associated UTM links
+6. Remove the campaign record from the database
+7. Redirect to the campaign dashboard after successful deletion
+8. Implement success/error notifications
+
+# Test Strategy:
+Test campaign deletion as both Manager and Team Member roles. Verify associated links are correctly deleted. Test that only Managers can delete campaigns. Verify the database is correctly updated after deletion.
+
+# Subtasks:
+## 1. Implement delete button in campaign UI [pending]
+### Dependencies: None
+### Description: Add a delete button to the campaign detail view that triggers the deletion flow
+### Details:
+Add a visually distinct delete button in the campaign management interface. Position it appropriately in the UI (likely in the campaign actions menu or as a standalone button with appropriate warning styling). Ensure it's only visible to users with deletion permissions.
+
+## 2. Create confirmation dialog component [pending]
+### Dependencies: 13.1
+### Description: Develop a reusable confirmation dialog that warns users about the permanent nature of deletion
+### Details:
+Build a modal dialog that clearly explains the consequences of campaign deletion, including loss of associated data. Include warning text, cancel and confirm buttons with appropriate styling. Ensure the confirmation button requires deliberate action (e.g., typing 'DELETE' or similar safeguard).
+
+## 3. Implement campaign deletion API endpoint [pending]
+### Dependencies: None
+### Description: Create a backend endpoint that handles campaign deletion requests
+### Details:
+Develop a DELETE endpoint at /api/campaigns/:id that accepts deletion requests. Implement proper error handling and response codes. Document the API endpoint for team reference.
+
+## 4. Add permission validation for deletion [pending]
+### Dependencies: 13.3
+### Description: Implement permission checks to ensure only authorized users can delete campaigns
+### Details:
+Add middleware or service logic that verifies the requesting user has appropriate permissions to delete the campaign. Check both user role permissions and campaign ownership. Return appropriate error messages for unauthorized attempts.
+
+## 5. Implement cascading deletion logic [pending]
+### Dependencies: 13.3, 13.4
+### Description: Ensure all related campaign data is properly deleted or handled
+### Details:
+Develop the backend logic to handle all related data when a campaign is deleted. This includes campaign metrics, associated content, user assignments, etc. Consider using database transactions to ensure data integrity. Determine whether to hard delete or soft delete (archive) the campaign data based on business requirements.
+
+## 6. Handle post-deletion navigation and feedback [pending]
+### Dependencies: 13.2, 13.5
+### Description: Implement proper UI feedback and navigation after successful deletion
+### Details:
+After successful deletion, redirect the user to an appropriate page (likely the campaigns list). Show a success notification confirming the deletion. Update any cached campaign lists in the frontend to reflect the deletion without requiring a full page refresh.
+

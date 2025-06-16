@@ -1,0 +1,56 @@
+# Task ID: 18
+# Title: Implement Free Trial System
+# Status: pending
+# Dependencies: 5, 17
+# Priority: medium
+# Description: Create a 7-day free trial system for new organizations.
+# Details:
+1. Set the default subscription status to 'trialing' for new organizations
+2. Calculate and store the trial end date (7 days from registration)
+3. Implement a trial status check in the application
+4. Create UI components to show trial status and remaining days
+5. Add prompts to subscribe before the trial ends
+6. Implement logic to restrict access after the trial expires
+7. Create email notifications for trial expiration (3 days before, 1 day before, on expiration)
+8. Provide a smooth transition from trial to paid subscription
+
+# Test Strategy:
+Test trial initialization for new organizations. Verify trial expiration logic works correctly. Test the transition from trial to paid subscription. Verify email notifications are sent at the correct times.
+
+# Subtasks:
+## 1. Implement trial status initialization [pending]
+### Dependencies: None
+### Description: Create functionality to initialize trial status for new organizations when they first sign up
+### Details:
+Add a trial_start_date and trial_end_date field to the Organization model. When a new organization is created, automatically set trial_start_date to current date and trial_end_date to 14 days later. Include a trial_status field with possible values: 'active', 'expired', 'converted'.
+
+## 2. Develop trial status checking logic [pending]
+### Dependencies: 18.1
+### Description: Create a service to check and update trial status based on current date and subscription status
+### Details:
+Implement a TrialService class with methods to check if trial is active, expired, or if the organization has converted to a paid plan. Include logic to automatically update trial_status when trial_end_date is reached. This service should be callable from various parts of the application.
+
+## 3. Create UI components for trial status display [pending]
+### Dependencies: 18.2
+### Description: Design and implement UI elements to show trial status and remaining days
+### Details:
+Create a TrialBanner component that displays remaining trial days and call-to-action for subscription. Implement a more detailed TrialStatusPage showing trial information and subscription options. Ensure these components reactively update based on trial status changes.
+
+## 4. Implement access restriction logic [pending]
+### Dependencies: 18.2
+### Description: Add middleware to restrict access to certain features after trial expiration
+### Details:
+Create a middleware that checks trial status before allowing access to premium features. Implement graceful degradation of functionality when trial expires. Add redirect logic to subscription page when users attempt to access restricted features after expiration.
+
+## 5. Develop email notification system [pending]
+### Dependencies: 18.1, 18.2
+### Description: Create an automated email system to notify users about trial status and expiration
+### Details:
+Implement scheduled emails to be sent at key points: trial start, 7 days before expiration, 1 day before expiration, and upon expiration. Create email templates with personalized content and clear call-to-action buttons for subscription conversion.
+
+## 6. Create trial-to-paid conversion flow [pending]
+### Dependencies: 18.2, 18.3, 18.5
+### Description: Implement the process for converting from trial to paid subscription
+### Details:
+Design and implement a seamless conversion flow from trial to paid plan. Include payment processing integration, subscription plan selection, and automatic status update upon successful payment. Ensure proper handling of trial data during conversion.
+

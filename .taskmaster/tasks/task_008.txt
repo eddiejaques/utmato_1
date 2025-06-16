@@ -1,0 +1,55 @@
+# Task ID: 8
+# Title: Implement User Management Interface
+# Status: pending
+# Dependencies: 6, 7
+# Priority: medium
+# Description: Create an interface for Managers to view and manage team members within their organization.
+# Details:
+1. Create a User Management page accessible only to Managers
+2. Implement the `/api/v1/organization/users` endpoint to list all users in the organization
+3. Display users in a table with their email, role, and join date
+4. Implement the `/api/v1/organization/users/{user_id}` DELETE endpoint for removing users
+5. Add a confirmation dialog before user removal
+6. Show the current user count vs. the maximum allowed (10)
+7. Display pending invitations with the ability to resend or cancel them
+
+# Test Strategy:
+Test listing users with various organization sizes. Verify user removal works correctly and updates the database. Test that managers cannot remove themselves. Verify invitation management functions work correctly.
+
+# Subtasks:
+## 1. Create User Management Page Component [pending]
+### Dependencies: None
+### Description: Develop the main user management page component with responsive layout
+### Details:
+Create a React component for the user management page that includes a table/list view of users, search functionality, and pagination. Ensure the layout is responsive and follows the application's design system. Include proper loading states and error handling.
+
+## 2. Implement User Listing API Endpoint [pending]
+### Dependencies: None
+### Description: Create backend API endpoint for retrieving user data with filtering and pagination
+### Details:
+Develop a RESTful API endpoint that returns user data with support for pagination, sorting, and filtering. Implement proper permission checks to ensure only authorized users can access this data. Include user attributes like name, email, role, and last login date in the response.
+
+## 3. Connect Frontend to User Listing API [pending]
+### Dependencies: 8.1, 8.2
+### Description: Integrate the user management component with the backend API
+### Details:
+Create service/hooks to fetch user data from the API endpoint and display it in the user management component. Implement client-side state management for the user data, including handling loading states, errors, and pagination controls.
+
+## 4. Implement User Removal Functionality [pending]
+### Dependencies: 8.3
+### Description: Create UI and API for user removal with confirmation dialog
+### Details:
+Add a delete button for each user in the list. Implement a confirmation dialog to prevent accidental deletions. Create the backend API endpoint for user removal. Add logic to prevent users from removing themselves and implement proper permission checks. Update the UI to reflect changes after successful deletion.
+
+## 5. Develop User Invitation Feature [pending]
+### Dependencies: 8.3
+### Description: Create functionality to invite new users to the system
+### Details:
+Implement an 'Invite User' button and form that allows admins to send invitations via email. Create the backend API endpoint to handle invitation creation and email sending. Include fields for email, role assignment, and optional personalized message. Add validation to prevent duplicate invitations.
+
+## 6. Implement Invitation Management Features [pending]
+### Dependencies: 8.5
+### Description: Add functionality to view, resend, and cancel pending invitations
+### Details:
+Create a section in the user management interface to display pending invitations. Implement features to resend invitations and cancel pending ones. Add the necessary backend API endpoints to support these operations. Include status indicators for invitations (pending, accepted, expired) and implement proper permission checks.
+

@@ -1,0 +1,56 @@
+# Task ID: 7
+# Title: Implement Team Member Invitation System
+# Status: pending
+# Dependencies: 5, 6
+# Priority: medium
+# Description: Create functionality for Managers to invite team members to join their organization.
+# Details:
+1. Create an invitation form component for Managers to input email addresses
+2. Implement the `/api/v1/invitations` endpoint to generate and store invitation records
+3. Generate secure, time-limited invitation tokens
+4. Send invitation emails with registration links containing the token
+5. Create a registration page that accepts and validates invitation tokens
+6. Implement logic to associate new users with the correct organization based on the invitation
+7. Update invitation status when accepted
+8. Enforce the 10-user limit per organization
+
+# Test Strategy:
+Test invitation creation, email delivery, and acceptance flow. Verify invitation tokens expire correctly. Test user limit enforcement. Verify users are correctly associated with the organization upon accepting an invitation.
+
+# Subtasks:
+## 1. Create Invitation Form Component [pending]
+### Dependencies: None
+### Description: Develop a user interface component for sending invitations to new users
+### Details:
+Build a React component that allows organization admins to invite new users by email. Include form validation for email format, role selection dropdown, and submission handling. Add appropriate error and success messaging. The form should prevent duplicate invitations to the same email address.
+
+## 2. Implement Invitation API Endpoint [pending]
+### Dependencies: 7.1
+### Description: Create backend API endpoints to handle invitation requests
+### Details:
+Develop REST API endpoints for creating, listing, and revoking invitations. Implement proper authentication and authorization checks to ensure only organization admins can send invitations. Store invitation data in the database with appropriate fields (email, role, organization ID, expiration date, etc.).
+
+## 3. Implement Secure Token Generation and Email Delivery [pending]
+### Dependencies: 7.2
+### Description: Create a system for generating secure invitation tokens and sending invitation emails
+### Details:
+Generate cryptographically secure tokens with appropriate expiration times. Implement email templates for invitation messages with branding elements. Set up email delivery service integration. Include tracking for sent invitations and implement rate limiting to prevent abuse.
+
+## 4. Build Token Validation and Registration Page [pending]
+### Dependencies: 7.3
+### Description: Create a registration flow for users who receive invitation links
+### Details:
+Develop a registration page that validates invitation tokens. Show appropriate error messages for expired or invalid tokens. Pre-fill the email field based on the invitation. Collect necessary user information (name, password, etc.) and implement validation. Handle the complete registration process for invited users.
+
+## 5. Implement Organization Association Logic [pending]
+### Dependencies: 7.4
+### Description: Create logic to associate newly registered users with the correct organization
+### Details:
+Implement backend logic to associate new users with the organization that sent the invitation. Assign the correct role based on the invitation details. Update organization member counts and handle any necessary notifications to organization admins about successful registrations.
+
+## 6. Implement User Limit Enforcement [pending]
+### Dependencies: 7.5
+### Description: Add logic to enforce organization user limits based on subscription plans
+### Details:
+Check organization user limits before allowing new invitations to be sent. Implement clear error messaging when limits are reached. Add upgrade prompts for organizations near their user limits. Create admin dashboard components to display current user count and limits. Ensure invitation counts and pending invitations are factored into limit calculations.
+

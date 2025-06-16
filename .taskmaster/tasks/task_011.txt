@@ -1,0 +1,56 @@
+# Task ID: 11
+# Title: Implement Campaign Detail View
+# Status: pending
+# Dependencies: 9, 10
+# Priority: medium
+# Description: Create a detailed view for individual campaigns showing all metadata and associated UTM links.
+# Details:
+1. Implement the `/api/v1/campaigns/{campaign_id}` GET endpoint
+2. Create a campaign detail page component
+3. Display all campaign metadata (name, objective, audience details, etc.)
+4. Show the campaign creator and creation/update dates
+5. Implement the `/api/v1/campaigns/{campaign_id}/links` GET endpoint
+6. Display a list of all UTM links associated with the campaign
+7. Add edit and delete buttons with appropriate permission checks
+8. Implement a "Generate Link" button to create new UTM links for the campaign
+
+# Test Strategy:
+Test campaign detail view with various campaigns. Verify all metadata is correctly displayed. Test permission-based UI elements. Verify associated links are correctly listed. Test navigation between campaign list and detail views.
+
+# Subtasks:
+## 1. Create Campaign Detail API Endpoint [pending]
+### Dependencies: None
+### Description: Implement a REST API endpoint to fetch detailed campaign information
+### Details:
+Create a GET endpoint at /api/campaigns/:id that returns comprehensive campaign details including name, description, status, dates, metrics, and owner information. Implement proper error handling for non-existent campaigns and permission validation.
+
+## 2. Implement Campaign Detail Data Fetching [pending]
+### Dependencies: 11.1
+### Description: Create service and hook for fetching campaign details from the API
+### Details:
+Develop a service function to call the campaign detail API endpoint. Create a React hook (useCampaignDetail) that handles loading states, error handling, and data caching. Implement proper TypeScript interfaces for the campaign detail data structure.
+
+## 3. Build Campaign Detail Page Component [pending]
+### Dependencies: 11.2
+### Description: Create the main UI component for displaying campaign details
+### Details:
+Develop a CampaignDetailPage component that displays all campaign information in a well-structured layout. Include sections for campaign metadata, performance metrics, and description. Implement loading states and error handling in the UI.
+
+## 4. Implement Associated Links Listing [pending]
+### Dependencies: 11.3
+### Description: Create functionality to display and manage links associated with the campaign
+### Details:
+Add a section in the campaign detail page that lists all associated links with their metrics. Implement sorting and filtering capabilities. Create a component to display individual link cards with their key performance indicators.
+
+## 5. Implement Permission-Based Action Buttons [pending]
+### Dependencies: 11.3
+### Description: Add action buttons with proper permission checks
+### Details:
+Create a component for action buttons (Edit, Delete, Pause/Resume) that only appear based on user permissions. Implement the permission checking logic that integrates with the authentication system. Ensure buttons are disabled when appropriate based on campaign status.
+
+## 6. Integrate and Test Campaign Detail View [pending]
+### Dependencies: 11.4, 11.5
+### Description: Integrate all components and perform comprehensive testing
+### Details:
+Connect all components into a cohesive campaign detail view. Write unit tests for individual components and integration tests for the entire flow. Test different permission scenarios and edge cases like loading states and error handling. Ensure responsive design works across device sizes.
+
