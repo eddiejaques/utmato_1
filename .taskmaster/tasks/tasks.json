@@ -235,7 +235,7 @@
         "dependencies": [
           1
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -243,7 +243,7 @@
             "description": "Create a Clerk account and set up a new project with appropriate authentication methods",
             "dependencies": [],
             "details": "1. Sign up for a Clerk account\n2. Create a new project in the Clerk dashboard\n3. Configure authentication methods (email/password, social logins)\n4. Set up the application domain and redirect URLs\n5. Obtain API keys and environment variables\n6. Configure webhook endpoints if needed",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 2,
@@ -253,7 +253,7 @@
               1
             ],
             "details": "1. Install Clerk React SDK packages\n2. Set up environment variables for API keys\n3. Implement ClerkProvider at the root of the application\n4. Configure routing integration with Next.js\n5. Set up proper error handling for authentication failures\n6. Test basic SDK functionality",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 3,
@@ -263,7 +263,7 @@
               2
             ],
             "details": "1. Implement Sign In component using Clerk's SignIn component or custom UI\n2. Implement Sign Up component using Clerk's SignUp component or custom UI\n3. Create a user profile management page\n4. Implement sign-out functionality\n5. Add loading states and error handling\n6. Style components to match application design",
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 4,
@@ -272,8 +272,8 @@
             "dependencies": [
               1
             ],
-            "details": "1. Install Clerk backend SDK\n2. Create middleware for JWT verification\n3. Configure middleware to extract user information from tokens\n4. Implement proper error handling for invalid or expired tokens\n5. Set up testing for the verification middleware\n6. Document the middleware usage for the team",
-            "status": "pending"
+            "details": "1. Install Clerk backend SDK\n2. Create middleware for JWT verification\n3. Configure middleware to extract user information from tokens\n4. Implement proper error handling for invalid or expired tokens\n5. Set up testing for the verification middleware\n6. Document the middleware usage for the team\n<info added on 2025-06-16T21:05:21.138Z>\nImplementation Plan for Backend JWT Verification Middleware:\n\n1. Install the Clerk backend SDK (Python) in the FastAPI backend environment. Check if a similar package is already present to avoid duplication.\n2. Create a new middleware function (e.g., verify_clerk_jwt) in the backend/middleware directory. This function will:\n   - Extract the Authorization header from incoming requests.\n   - Validate the JWT using Clerk's backend SDK.\n   - Extract user information (user_id, email, roles) from the token and attach it to the request state.\n   - Handle errors for missing, invalid, or expired tokens by raising HTTPException with appropriate status codes and messages.\n3. Integrate the middleware into the FastAPI app, applying it to protected routes only.\n4. Write unit and integration tests for the middleware, covering valid, invalid, and expired token scenarios. Place tests in backend/tests/middleware/test_verify_clerk_jwt.py.\n5. Document the middleware usage and configuration in backend/docs/auth_middleware.md for team reference.\n\nEdge Cases & Notes:\n- Ensure the middleware does not block public routes.\n- Log errors for debugging but avoid leaking sensitive info.\n- Use Pydantic models for token payload validation.\n- Add a test case for every logical feature change.\n</info added on 2025-06-16T21:05:21.138Z>",
+            "status": "in-progress"
           },
           {
             "id": 5,
@@ -283,8 +283,8 @@
               2,
               4
             ],
-            "details": "1. Create higher-order components or hooks for frontend route protection\n2. Implement redirect logic for unauthenticated users\n3. Set up role-based access control if needed\n4. Protect API routes using the JWT verification middleware\n5. Add loading states for authentication checks\n6. Test protected routes with authenticated and unauthenticated users",
-            "status": "pending"
+            "details": "1. Create higher-order components or hooks for frontend route protection\n2. Implement redirect logic for unauthenticated users\n3. Set up role-based access control if needed\n4. Protect API routes using the JWT verification middleware\n5. Add loading states for authentication checks\n6. Test protected routes with authenticated and unauthenticated users\n<info added on 2025-06-16T21:05:24.897Z>\n# Implementation Plan for Protected Route Implementation\n\n1. Frontend: Create a higher-order component (HOC) or custom React hook (e.g., useRequireAuth) in the frontend/components/auth directory to wrap protected pages/components. This will check Clerk authentication state and redirect unauthenticated users to the sign-in page.\n2. Frontend: Add loading and error states to the HOC/hook for better UX.\n3. Frontend: Implement role-based access control (RBAC) logic if required, using user metadata from Clerk.\n4. Backend: Apply the verify_clerk_jwt middleware to all protected FastAPI routes. Ensure only authenticated users can access these endpoints.\n5. Backend: Add RBAC checks in route handlers if needed.\n6. Testing: Write tests for both frontend (Jest/React Testing Library) and backend (Pytest) to verify that protected routes are inaccessible to unauthenticated users and accessible to authenticated users.\n\n## Edge Cases & Notes\n- Ensure public routes remain accessible without authentication.\n- Handle token expiration and refresh gracefully.\n- Add a test case for every logical feature change.\n</info added on 2025-06-16T21:05:24.897Z>",
+            "status": "in-progress"
           },
           {
             "id": 6,
@@ -295,8 +295,8 @@
               4,
               5
             ],
-            "details": "1. Configure session duration and expiration settings in Clerk dashboard\n2. Implement automatic token refresh logic\n3. Handle session expiration gracefully in the UI\n4. Set up persistent sessions if required\n5. Implement proper session cleanup on sign-out\n6. Test session persistence and refresh scenarios",
-            "status": "pending"
+            "details": "1. Configure session duration and expiration settings in Clerk dashboard\n2. Implement automatic token refresh logic\n3. Handle session expiration gracefully in the UI\n4. Set up persistent sessions if required\n5. Implement proper session cleanup on sign-out\n6. Test session persistence and refresh scenarios\n<info added on 2025-06-16T21:05:29.418Z>\nImplementation Plan for Session Management and Token Refresh Logic:\n\n1. Clerk Dashboard: Configure session duration and expiration settings as per security requirements.\n2. Frontend: Implement automatic token refresh logic using Clerk's SDK. Ensure the app requests a new token before the current one expires, and updates the authentication state accordingly.\n3. Frontend: Handle session expiration in the UI by prompting the user to re-authenticate or displaying a session expired message.\n4. Frontend: Set up persistent sessions (e.g., using cookies or localStorage) if required, following Clerk's best practices.\n5. Frontend: Implement proper session cleanup on sign-out, ensuring all tokens and session data are cleared.\n6. Backend: Ensure the JWT verification middleware correctly handles refreshed tokens and session expiration.\n7. Testing: Write tests for session persistence, expiration, and refresh scenarios (frontend: Jest; backend: Pytest).\n\nEdge Cases & Notes:\n- Handle network failures during token refresh.\n- Ensure security by not exposing tokens in client-side logs.\n- Add a test case for every logical feature change.\n</info added on 2025-06-16T21:05:29.418Z>",
+            "status": "in-progress"
           }
         ]
       },
@@ -2312,7 +2312,7 @@
     ],
     "metadata": {
       "created": "2025-06-16T08:11:19.709Z",
-      "updated": "2025-06-16T20:03:32.413Z",
+      "updated": "2025-06-16T21:01:22.723Z",
       "description": "Tasks for master context"
     }
   }

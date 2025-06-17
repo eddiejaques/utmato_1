@@ -4,3 +4,7 @@ psycopg2
 python-dotenv
 pydantic
 alembic
+python-jose[cryptography]>=3.3.0
+requests>=2.31.0
+pytest
+httpx

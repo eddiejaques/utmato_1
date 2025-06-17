@@ -3,19 +3,19 @@
 # Status: pending
 # Dependencies: 1
 # Priority: high
-# Description: Set up the UI framework using Tailwind CSS and shadcn/ui components for a consistent, responsive design.
+# Description: Set up the UI framework using Tailwind CSS and shadcn/ui components for a consistent, responsive design across all application pages.
 # Details:
 1. Install and configure Tailwind CSS in the Next.js project
 2. Set up shadcn/ui component library
 3. Create a consistent color scheme and typography system
-4. Implement responsive layouts for all pages
+4. Implement responsive layouts for all pages (Landing, Dashboard, Campaign Management, Campaign Detail, Creation/Editing Modals, User/Domain Management)
 5. Create reusable UI components (buttons, forms, cards, etc.)
 6. Implement dark/light mode support
 7. Create a component documentation/showcase page
 8. Ensure accessibility compliance (WCAG 2.1 AA)
 
 # Test Strategy:
-Test UI components on various screen sizes and devices. Verify that responsive layouts work correctly. Test accessibility using automated tools and manual testing. Verify that dark/light mode switching works correctly.
+Test UI components on various screen sizes and devices. Verify that responsive layouts work correctly for each page (Landing, Dashboard, Campaign views, etc.). Test accessibility using automated tools and manual testing. Verify that dark/light mode switching works correctly across all page components.
 
 # Subtasks:
 ## 1. Tailwind and shadcn/ui Setup [pending]
@@ -53,4 +53,40 @@ Set up a theme context provider for managing theme state. Create dark and light 
 ### Description: Create comprehensive documentation and a component showcase for the UI framework
 ### Details:
 Set up a documentation site or page within the application. Document usage examples for all components. Create a component showcase with interactive examples. Document theming and customization options. Include accessibility guidelines and best practices. Provide implementation examples for common UI patterns.
+
+## 7. Landing Page UI Components [pending]
+### Dependencies: 26.3, 26.4
+### Description: Implement UI components specific to the Landing Page design
+### Details:
+Create hero section with compelling value proposition. Implement feature showcase components. Design testimonial/social proof sections. Build pricing tier components if applicable. Develop call-to-action sections. Ensure responsive behavior for all landing page elements. Implement animated transitions where appropriate.
+
+## 8. Dashboard UI Components [pending]
+### Dependencies: 26.3, 26.4
+### Description: Implement UI components specific to the Dashboard design
+### Details:
+Create dashboard layout with appropriate grid system. Implement metric/KPI card components. Design data visualization components (charts, graphs). Build campaign summary cards. Create activity feed components. Implement quick action buttons and navigation elements. Ensure all dashboard components are responsive.
+
+## 9. Campaign Management View Components [pending]
+### Dependencies: 26.3, 26.4
+### Description: Implement UI components for the Campaign Management view
+### Details:
+Create campaign list/table component with sorting and filtering. Implement campaign status indicators. Design campaign type filters. Build campaign search functionality. Create campaign action buttons (edit, delete, duplicate). Implement pagination components. Ensure responsive behavior for all screen sizes.
+
+## 10. Campaign Detail View Components [pending]
+### Dependencies: 26.3, 26.4
+### Description: Implement UI components for the Campaign Detail view
+### Details:
+Create campaign header with key information. Implement campaign metrics dashboard. Design campaign timeline/history components. Build email template preview components. Create recipient list display. Implement campaign status workflow indicators. Design A/B testing result displays if applicable. Ensure all components are responsive.
+
+## 11. Creation/Editing Modal Components [pending]
+### Dependencies: 26.3, 26.4
+### Description: Implement UI components for Campaign Creation and Editing modals
+### Details:
+Create multi-step form layout for campaign creation. Implement form validation indicators. Design template selection components. Build recipient targeting interface. Create scheduling components with date/time pickers. Implement preview functionality. Design confirmation screens. Ensure modal components are responsive and accessible.
+
+## 12. User/Domain Management Settings Components [pending]
+### Dependencies: 26.3, 26.4
+### Description: Implement UI components for User and Domain Management settings
+### Details:
+Create user management table/list components. Implement role selection interfaces. Design domain verification components. Build API key management interface. Create notification preference settings. Implement account information forms. Design billing/subscription components if applicable. Ensure all settings components are responsive and accessible.
 
