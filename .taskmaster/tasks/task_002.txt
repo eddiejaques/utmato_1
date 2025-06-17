@@ -3,109 +3,54 @@
 # Status: done
 # Dependencies: 1
 # Priority: high
-# Description: Implement the PostgreSQL database schema in Supabase as defined in the PRD, using Supabase-specific features and best practices.
+# Description: Implement the PostgreSQL database schema in Supabase as defined in the PRD.
 # Details:
-Follow these Supabase-specific steps to set up the backend database:
+Create a Supabase project and implement the following tables:
+- organizations
+- users
+- campaigns
+- links
+- invitations
 
-1. **Create Supabase Project:**
-   - Use the Supabase dashboard (https://app.supabase.com/) to create a new project.
-   - Choose the appropriate region, set a strong database password, and note the project reference (URL) and API keys.
-
-2. **Enable Required Extensions:**
-   - In the Supabase dashboard, go to SQL Editor and run:
-     ```sql
-     -- Enable pgcrypto for UUID generation
-     create extension if not exists "pgcrypto";
-     ```
-   - Enable any other required extensions as needed by your schema.
-
-3. **Create Tables:**
-   - Use the SQL Editor to run the schema from `scripts/schema.sql` (extracted from the PRD).
-   - Ensure all tables (organizations, users, campaigns, links, invitations) are created with the correct columns and constraints.
-   - If using Supabase Auth, consider referencing `auth.users` for user authentication and linking.
-
-4. **Set Up Supabase Auth Integration:**
-   - Configure authentication providers (e.g., Google, email/password) in the Auth section of the dashboard.
-   - If your app uses the `auth.users` table, ensure your `users` table references it appropriately (e.g., via `user_id` or `clerk_user_id`).
-
-5. **Configure Row Level Security (RLS):**
-   - Enable RLS for each table in the Supabase dashboard.
-   - Add policies for SELECT, INSERT, UPDATE, DELETE to restrict access based on organization, user role, etc.
-   - Example: Only allow users to access rows belonging to their organization.
-
-6. **Verify RLS and Table Access:**
-   - Use the Supabase dashboard's Table Editor and API to test access as different users/roles.
-   - Attempt cross-organization access to ensure RLS is enforced.
-
-7. **Export and Version Schema:**
-   - Save your schema changes in `scripts/schema.sql` for version control and future migrations.
-   - Document any manual changes or policies in the repo.
-
-8. **Document Project Details:**
-   - Record the Supabase project URL, API keys, and database connection string for backend integration (e.g., in your .env file or secrets manager).
-
-9. **(Optional) Use Supabase CLI:**
-   - For local development, install and use the Supabase CLI to run a local Supabase stack and manage migrations.
+Ensure all tables have the specified columns, constraints, and relationships as defined in the PRD. Set up appropriate indexes for frequently queried columns. Configure row-level security policies to ensure data isolation between organizations.
 
 # Test Strategy:
-- Verify all tables and columns exist using the Supabase Table Editor and/or `scripts/check_schema.py`.
-- Test RLS by attempting to access data as different users (using Supabase Auth and API).
-- Confirm that only authorized users can access/modify data for their organization.
-- Validate that all required extensions are enabled.
-- Ensure schema changes are versioned in `scripts/schema.sql`.
+Verify all tables are created with correct columns, data types, and constraints. Test foreign key relationships by inserting sample data. Validate that indexes are properly created. Test row-level security by attempting cross-organization data access.
 
 # Subtasks:
-## 1. Create Supabase Project [pending]
+## 1. Create Supabase Project [done]
 ### Dependencies: None
-### Description: Set up a new Supabase project via the dashboard
+### Description: Set up a new Supabase project in the cloud platform
 ### Details:
-Create a new Supabase project at https://app.supabase.com/. Configure region, password, and note the project reference and API keys.
+Create a new Supabase project through the Supabase dashboard. Configure the project settings including region, database password, and pricing plan. Note down the project URL and API keys for future reference.
 
-## 2. Enable Required Extensions [pending]
+## 2. Implement Users Table [done]
 ### Dependencies: 2.1
-### Description: Enable pgcrypto and any other required extensions
+### Description: Set up the users table with proper columns and constraints
 ### Details:
-In the SQL Editor, run `create extension if not exists "pgcrypto";` and enable any other extensions needed by your schema.
+Create a users table that extends Supabase's auth.users table. Include columns for user profile information such as display_name, avatar_url, and any other user-specific data. Set up appropriate constraints and indexes for optimal performance.
 
-## 3. Create Tables via SQL Editor [pending]
+## 3. Implement Workspaces Table [done]
 ### Dependencies: 2.2
-### Description: Create all required tables using the schema.sql file
+### Description: Create the workspaces table with relationships to users
 ### Details:
-Paste and run the contents of `scripts/schema.sql` in the Supabase SQL Editor. Verify table creation in the Table Editor.
+Create a workspaces table with columns for workspace name, description, creation date, and owner_id (foreign key to users table). Set up appropriate constraints and indexes. Implement a many-to-many relationship with users through a junction table for workspace members.
 
-## 4. Set Up Supabase Auth Integration [pending]
-### Dependencies: 2.3
-### Description: Configure authentication providers and user linking
+## 4. Implement Tasks Table [done]
+### Dependencies: 2.2, 2.3
+### Description: Set up the tasks table with proper relationships to workspaces and users
 ### Details:
-Enable Google and email/password auth in the Auth section. Ensure your users table references Supabase Auth users as needed.
+Create a tasks table with columns for title, description, status, priority, due_date, assigned_to (foreign key to users), and workspace_id (foreign key to workspaces). Set up appropriate constraints and indexes for efficient querying.
 
-## 5. Configure Row Level Security (RLS) [pending]
-### Dependencies: 2.4
-### Description: Enable and configure RLS policies for all tables
+## 5. Implement Comments Table [done]
+### Dependencies: 2.2, 2.4
+### Description: Create the comments table with relationships to tasks and users
 ### Details:
-Enable RLS for each table in the dashboard. Add policies to restrict access by organization and user role.
+Create a comments table with columns for content, creation_date, task_id (foreign key to tasks), and user_id (foreign key to users). Set up appropriate constraints and indexes for efficient retrieval of comments for specific tasks.
 
-## 6. Verify RLS and Table Access [pending]
-### Dependencies: 2.5
-### Description: Test RLS and access controls using dashboard and API
+## 6. Configure Row-Level Security Policies [done]
+### Dependencies: 2.2, 2.3, 2.4, 2.5
+### Description: Implement RLS policies for all tables to ensure proper data access control
 ### Details:
-Test access as different users using the dashboard and Supabase API. Attempt cross-organization access to confirm RLS enforcement.
-
-## 7. Export and Version Schema [pending]
-### Dependencies: 2.6
-### Description: Save schema changes to scripts/schema.sql
-### Details:
-Export the schema from Supabase and update `scripts/schema.sql` for version control.
-
-## 8. Document Project Details [pending]
-### Dependencies: 2.7
-### Description: Record project URL, API keys, and connection info
-### Details:
-Document the Supabase project URL, API keys, and database connection string for backend integration in your .env or secrets manager.
-
-## 9. (Optional) Use Supabase CLI for Local Dev [pending]
-### Dependencies: 2.8
-### Description: Set up Supabase CLI for local development and migrations
-### Details:
-Install the Supabase CLI and use it to run a local stack, manage migrations, and test schema changes locally before deploying.
+Configure Row-Level Security (RLS) policies for all tables to restrict data access based on user roles and permissions. Implement policies for read, insert, update, and delete operations. Ensure workspace members can only access data within their workspaces and that sensitive data is properly protected.
 

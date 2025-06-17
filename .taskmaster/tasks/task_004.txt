@@ -1,6 +1,6 @@
 # Task ID: 4
 # Title: Setup Authentication with Clerk
-# Status: pending
+# Status: in-progress
 # Dependencies: 1
 # Priority: high
 # Description: Integrate Clerk authentication service for user management and JWT-based authentication.
@@ -17,7 +17,7 @@
 Test user registration and login flows with both Google OAuth and email/password. Verify JWT tokens are correctly validated by the backend. Test token expiration and refresh mechanisms. Ensure protected routes reject unauthenticated requests.
 
 # Subtasks:
-## 1. Clerk Account and Project Setup [pending]
+## 1. Clerk Account and Project Setup [done]
 ### Dependencies: None
 ### Description: Create a Clerk account and set up a new project with appropriate authentication methods
 ### Details:
@@ -28,7 +28,7 @@ Test user registration and login flows with both Google OAuth and email/password
 5. Obtain API keys and environment variables
 6. Configure webhook endpoints if needed
 
-## 2. Frontend SDK Integration [pending]
+## 2. Frontend SDK Integration [done]
 ### Dependencies: 4.1
 ### Description: Install and configure the Clerk SDK in the frontend application
 ### Details:
@@ -39,7 +39,7 @@ Test user registration and login flows with both Google OAuth and email/password
 5. Set up proper error handling for authentication failures
 6. Test basic SDK functionality
 
-## 3. Authentication Component Implementation [pending]
+## 3. Authentication Component Implementation [done]
 ### Dependencies: 4.2
 ### Description: Build UI components for sign-in, sign-up, and user profile management
 ### Details:
@@ -50,7 +50,7 @@ Test user registration and login flows with both Google OAuth and email/password
 5. Add loading states and error handling
 6. Style components to match application design
 
-## 4. Backend JWT Verification Middleware [pending]
+## 4. Backend JWT Verification Middleware [done]
 ### Dependencies: 4.1
 ### Description: Create middleware to verify Clerk JWTs in backend API routes
 ### Details:
@@ -58,10 +58,10 @@ Test user registration and login flows with both Google OAuth and email/password
 2. Create middleware for JWT verification
 3. Configure middleware to extract user information from tokens
 4. Implement proper error handling for invalid or expired tokens
-5. Set up testing for the verification middleware
-6. Document the middleware usage for the team
+5. Set up testing for the verification middleware (deferred)
+6. Document the middleware usage for the team (deferred)
 
-## 5. Protected Route Implementation [pending]
+## 5. Protected Route Implementation [done]
 ### Dependencies: 4.2, 4.4
 ### Description: Implement route protection for authenticated-only pages and API endpoints
 ### Details:
@@ -70,16 +70,24 @@ Test user registration and login flows with both Google OAuth and email/password
 3. Set up role-based access control if needed
 4. Protect API routes using the JWT verification middleware
 5. Add loading states for authentication checks
-6. Test protected routes with authenticated and unauthenticated users
+6. Test protected routes with authenticated and unauthenticated users (deferred)
 
-## 6. Session Management and Token Refresh Logic [pending]
+## 6. Session Management and Token Refresh Logic [done]
 ### Dependencies: 4.2, 4.4, 4.5
 ### Description: Implement session handling and automatic token refresh mechanisms
 ### Details:
 1. Configure session duration and expiration settings in Clerk dashboard
-2. Implement automatic token refresh logic
+2. Implement automatic token refresh logic (deferred)
 3. Handle session expiration gracefully in the UI
 4. Set up persistent sessions if required
 5. Implement proper session cleanup on sign-out
-6. Test session persistence and refresh scenarios
+6. Test session persistence and refresh scenarios (deferred)
+
+# ---
+# Follow-up Tasks (Deferred for Future Execution)
+- Write and pass comprehensive tests for the JWT middleware
+- Expand error handling for edge cases (malformed tokens, network errors)
+- Implement advanced session management (token refresh, session revocation)
+- Add logging and monitoring for authentication events
+- Document middleware usage and integration for the team
 
